@@ -8,7 +8,23 @@ As one of the largest German instutition to fund research is [commited to gender
 
 ### Target audience
 The target audience for this project are equal opportunity commissioners at universities and people interested in gender equality. It should give you an opportunity to explore different universities' degrees of gender equality to see where there's still work to be done.
+
 (The description of the project should not be too extensive but help people understand the project and your design decisions in detail. Describe the idea behind the visualization project, the target group, and what its functionality is (e.g., interaction). Please complete this description with said design decisions as stated above. Do not forget to describe external data sources you used, and mention libraries you used in addition to d3.js.)
+
+### Domain problem characterization
+(Describe the domain situation, i.e., what is the group of target users, their domain of interest, their questions, and their data.)
+           
+### Data / task abstraction
+(Formulate the tasks in a domain-independent vocabulary. How did you prepare (aggregate, filter...) the data to support the tasks?)
+           
+### Visual encoding / interaction design
+(Describe the visual encoding and why you decided for it. What interaction types did you use and why?)
+           
+### Algorithm design
+(How did you make sure that the computational complexity of your solution is appropriate? What is the bottleneck with respect to performance?)
+            
+### Validation 
+(Validate your design and document lessons learned: Conduct an informal validation with at least one person who has not seen the visualization before. Let the person use the visualization and comment on it (“think aloud”; https://en.wikipedia.org/wiki/Think_aloud_protocol). Try to address the threats mentioned in the Munzner 2009 paper for the first three categories (domain, data/task, and visual encoding / interaction) and summarize the person’s answers. What did you learn from the validation for possible improvements of your visualization?)
 
 ## Installation
 (How can I install the visualization project (step-by-step manual)? 
