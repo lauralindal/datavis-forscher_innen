@@ -26,9 +26,19 @@ The target audience for this project are equal opportunity commissioners at univ
 (The description of the project should not be too extensive but help people understand the project and your design decisions in detail. Describe the idea behind the visualization project, the target group, and what its functionality is (e.g., interaction). Please complete this description with said design decisions as stated above. Do not forget to describe external data sources you used, and mention libraries you used in addition to d3.js.)
 
 ### <a name="domain"></a> Domain problem characterization
-(Describe the domain situation, i.e., what is the group of target users, their domain of interest, their questions, and their data.)
+see above for domain situation & target users & domain of interest & How gender diverse are research teams at German universities? How gender diverse is the collaboration between universities?. Our data is the GEPRIS dataset that contains projects funded by the DFG, including the people involved in those project upon application. We've also derived a probable gender based on the first name. This data stems from Lax-Martinez, G., Raffo, J. and Saito, K. 2016. "Identifying the Gender of PCT inventors", WIPO Economic Research Working Paper 33. 
+
+There are 20% of first names that could not be assigned a gender. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current dat while change over time is not represented. This could lead to bias an spurious links between institutions.
            
 ### <a name="abstraction"></a> Data / task abstraction
+Dataset overall: tables
+Project IDs: nominal
+Person IDs: nominal
+Person Gender: nominal
+Project role: nominal
+Insitution adress: position
+
+Discovery distribution. Browse topology. Identify & compare universities & individuals.
 (Formulate the tasks in a domain-independent vocabulary. How did you prepare (aggregate, filter...) the data to support the tasks?)
            
 ### <a name="encoding"></a> Visual encoding / interaction design
