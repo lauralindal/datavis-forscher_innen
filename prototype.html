@@ -3,10 +3,21 @@
 <head>
   <title>A D3 map</title>
   <script src='https://d3js.org/d3.v4.min.js'></script>
+  <script src="https://d3js.org/d3-zoom.v1.min.js"></script>
   <script src='data/schland.geo.js'></script>
+  <script src="data/extracted_institution_data_geocoded.geo.js"></script>
+  
+  <style>
+  svg {
+	  border: 1px solid #666;
+	  }
+  </style>
 </head>
 <body>
   <script>
+	  
+
+
 var width = 800,
     height = 800;
 
@@ -14,25 +25,89 @@ var svg = d3.select('body')
   .append('svg')
   .attr('width', width)
   .attr('height', height);
+  
 
-var g = svg.append('g');
+var deutschland = svg.append('g');
 
-var albersProjection = d3.geoAlbers()
+var projection = d3.geoAlbers()
   .scale(4000)
   .center([13, 52.313])
     .rotate([0.057, 0])
   .translate([width/2, height/2]);
 
 var geoPath = d3.geoPath()
-    .projection(albersProjection);
+    .projection(projection)
+    .pointRadius([5])
+;
 
-g.selectAll('path')
+deutschland.selectAll('path')
   .data(schland.features)
   .enter()
   .append('path')
   .attr('fill', '#ccc')
-  .attr('d', geoPath);
+  .attr('d', geoPath)
+  .attr('radius','100');
 
+var color = d3.scaleLinear()
+    .domain([0, 1])
+    .range(["blue", "red"]);
+
+color(20); // "#9a3439"
+color(50); // "#7b5167"
+
+/*
+var institute = svg.append('g');
+
+institute.selectAll('path')
+  .data(institute_data.features)
+  .enter()
+  .append('path')
+  .attr('fill', function(d,i) { 
+	   return color(d.properties.institution_gender_index); 
+	})
+  .attr('stroke', '#999')
+  .attr('d', geoPath)
+  .on('click', function(institut){
+	  console.log(institut.properties.name);
+  });;
+ */
+ 
+var institute = svg.append('g');
+
+institute.selectAll('circle')
+  .data(institute_data.features)
+  .enter()
+  .append('circle')
+  .attr('r', function(d,i) {
+	  return 3;
+  })
+  .attr('cx',function(d) { return projection(d.geometry.coordinates)[0]})
+  .attr('cy',function(d) { return projection(d.geometry.coordinates)[1]})
+  .attr('fill', function(d,i) { 
+	   return color(d.properties.institution_gender_index); 
+	})
+  .attr('stroke', '#999')
+  //.attr('d', geoPath)
+  .on('click', function(institut){
+	  console.log(institut.properties.name);
+  });;
+  
+var zoom = d3.zoom()
+  .extent([[0, 0], [width, height]])
+  .scaleExtent([1, 8])
+  .on("zoom", zoomed)
+svg.call(zoom);
+
+  function zoomed() {
+    deutschland.attr("transform", d3.event.transform);
+    institute.attr("transform", d3.event.transform);
+    
+	zoom.scaleBy(institute.selectAll('circle'),0.5)
+	
+	//console.log(d3.event.scale)
+  }
+
+  
   </script>
 </body>
 </html>
