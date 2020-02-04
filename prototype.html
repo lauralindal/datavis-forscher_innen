@@ -1,0 +1,38 @@
+
+<html>
+<head>
+  <title>A D3 map</title>
+  <script src='https://d3js.org/d3.v4.min.js'></script>
+  <script src='data/schland.geo.js'></script>
+</head>
+<body>
+  <script>
+var width = 800,
+    height = 800;
+
+var svg = d3.select('body')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height);
+
+var g = svg.append('g');
+
+var albersProjection = d3.geoAlbers()
+  .scale(4000)
+  .center([13, 52.313])
+    .rotate([0.057, 0])
+  .translate([width/2, height/2]);
+
+var geoPath = d3.geoPath()
+    .projection(albersProjection);
+
+g.selectAll('path')
+  .data(schland.features)
+  .enter()
+  .append('path')
+  .attr('fill', '#ccc')
+  .attr('d', geoPath);
+
+  </script>
+</body>
+</html>
