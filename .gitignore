@@ -1,1 +1,7 @@
 .jupyter_checkpoints
+.ipynb_checkpoints
+wgnd_source.csv
+extracted_person_data.csv
+project_person_relations.csv
+reduced_data_person.csv
+people_joined_with_institutions.csv
