@@ -21,22 +21,27 @@ A visualization of gendered collaboration amongst researchers funded by the DFG 
 * [Copyright](#copyright)
 
 ## <a name="project-description"></a> Project description
-As one of the largest German instutition to fund research is [commited to gender equality](https://www.dfg.de/en/service/press/press_releases/2017/press_release_no_24/index.html "Press Release No. 24 | 5 July 2017"), it makes sense to look at their own data in order to analyze how and where measures need to be taken to own up to these promises. We're using parts of the GEPRIS data to look at collaborations within research project that are funded by the DFG. As [research](https://www.equityinstem.org/networks-metaanalysis/) shows, people tend to form their networks with people who are similar to them, which can hinder gender inclusion in fields that have traditionally been shaped by male networks. To find out whether this is the case for German academia and research as well, we are visualizing the collaboration amongst researchers funded by DFG.
+As one of the largest German instutition to fund research is [commited to gender equality](https://www.dfg.de/en/service/press/press_releases/2017/press_release_no_24/index.html "Press Release No. 24 | 5 July 2017"), it makes sense to look at their own data in order to analyze how and where measures need to be taken to own up to these promises. We're using parts of the [GEPRIS data](https://gepris.dfg.de/gepris/OCTOPUS) to look at collaborations within research project that are funded by the DFG. As [research](https://www.equityinstem.org/networks-metaanalysis/) shows, people tend to form their networks with people who are similar to them, which can hinder gender inclusion in fields that have traditionally been shaped by male networks. To find out whether this is the case for German academia and research as well, we are visualizing the collaboration amongst researchers funded by DFG.
 
 ###  <a name="target"></a> Target audience
-The target audience for this project are equal opportunity commissioners at universities and people interested in gender equality. It should give you an opportunity to explore different universities' degrees of gender equality to see where there's still work to be done.
+The target audience for this project are equal opportunity commissioners at universities and people interested in gender equality.
 
 ###  <a name="functionality"></a> Functionality
-###  <a name="external"></a> External data
+We're giving you the opportunity to explore different universities' degrees of gender equality to see where there's still work to be done.
 
-(The description of the project should not be too extensive but help people understand the project and your design decisions in detail. Describe the idea behind the visualization project, the target group, and what its functionality is (e.g., interaction). Please complete this description with said design decisions as stated above. Do not forget to describe external data sources you used, and mention libraries you used in addition to d3.js.)
+###  <a name="external"></a> External data
+[GEPRIS data](https://gepris.dfg.de/gepris/OCTOPUS)
+[Worldwide Gender-Name Dictionary](https://ideas.repec.org/c/wip/eccode/10.html)
+Geodata from ?
+External libraries in addition to d3.js?
 
 ##  <a name="design"></a> Design Decicions based on “Four Nested Levels of Visualization Design” by Munzner
 
 ### <a name="domain"></a> Domain problem characterization
+"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." reads a [statement](https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf) by Columbia University in 2018. While their statement focuses on students, the same applies to researchers. We are thus interested in gender relations (as one aspect of diversity) within German academia. This is important knowledge for equal opportunity commissioners at German universities: How diverse are research projects regarding the gender ratios of their teams? How diverse are individual researchers' collaborations? And how diverse are universities regarding the gender ratio of projects that they host? 
 see above for domain situation & target users & domain of interest & How gender diverse are research teams at German universities? How gender diverse is the collaboration between universities?. Our data is the GEPRIS dataset that contains projects funded by the DFG, including the people involved in those project upon application. We've also derived a probable gender based on the first name. This data stems from Lax-Martinez, G., Raffo, J. and Saito, K. 2016. "Identifying the Gender of PCT inventors", WIPO Economic Research Working Paper 33. 
 
-There are 20% of first names that could not be assigned a gender. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current dat while change over time is not represented. This could lead to bias an spurious links between institutions.
+There are 20% of first names that could not be assigned a gender. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current data. This could lead to bias an spurious links between institutions.
            
 ### <a name="abstraction"></a> Data / task abstraction
 Dataset overall: tables
