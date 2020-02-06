@@ -31,17 +31,21 @@ We're giving you the opportunity to explore different universities' degrees of g
 
 ###  <a name="external"></a> External data
 [GEPRIS data](https://gepris.dfg.de/gepris/OCTOPUS)
+
 [Worldwide Gender-Name Dictionary](https://ideas.repec.org/c/wip/eccode/10.html)
+
 Geodata from ?
+
 External libraries in addition to d3.js?
 
 ##  <a name="design"></a> Design Decicions based on “Four Nested Levels of Visualization Design” by Munzner
 
 ### <a name="domain"></a> Domain problem characterization
-"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." reads a [statement](https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf) by Columbia University in 2018. While their statement focuses on students, the same applies to researchers. We are thus interested in gender relations (as one aspect of diversity) within German academia. This is important knowledge for equal opportunity commissioners at German universities: How diverse are research projects regarding the gender ratios of their teams? How diverse are individual researchers' collaborations? And how diverse are universities regarding the gender ratio of projects that they host? 
-see above for domain situation & target users & domain of interest & How gender diverse are research teams at German universities? How gender diverse is the collaboration between universities?. Our data is the GEPRIS dataset that contains projects funded by the DFG, including the people involved in those project upon application. We've also derived a probable gender based on the first name. This data stems from Lax-Martinez, G., Raffo, J. and Saito, K. 2016. "Identifying the Gender of PCT inventors", WIPO Economic Research Working Paper 33. 
+"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." reads a [statement](https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf) by Columbia University in 2018. While their statement focuses on students, the same applies to researchers. 
 
-There are 20% of first names that could not be assigned a gender. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current data. This could lead to bias an spurious links between institutions.
+We are thus interested in gender relations (as one aspect of diversity) within German academia. This is important knowledge for equal opportunity commissioners at German universities: How diverse are research projects regarding the gender ratios of their teams? How diverse are individual researchers' collaborations? And how diverse are universities regarding the gender ratio of projects that they host?
+
+Our data is the [GEPRIS dataset](https://gepris.dfg.de/gepris/OCTOPUS) that contains projects funded by the DFG, including the people and institutions involved in those projects upon application. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current data. This could lead to bias and spurious links. We've also derived a probable gender for each person based on the first name. This data stems from [Lax-Martinez, G., Raffo, J. and Saito, K. 2016. "Identifying the Gender of PCT inventors", WIPO Economic Research Working Paper 33.](https://ideas.repec.org/c/wip/eccode/10.html). We validated this assignment by picking the title "Professor" and "Professorin", and comparing them to the gender assignment. Less than 1% of the assignments were in contrast to the titles. However, around 19%  of first names could not be assigned a gender at all. 
            
 ### <a name="abstraction"></a> Data / task abstraction
 Dataset overall: tables
