@@ -1,6 +1,6 @@
 # Gendered collaboration amongst German researchers
 
-## tl;dr 
+## tl;dr
 A visualization of gendered collaboration amongst researchers funded by the DFG in order to explore gender equality within academia.
 
 ## Table of Contents
@@ -41,13 +41,15 @@ External libraries in addition to d3.js?
 ##  <a name="design"></a> Design Decicions based on “Four Nested Levels of Visualization Design” by Munzner
 
 ### <a name="domain"></a> Domain problem characterization
-"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." reads a [statement](https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf) by Columbia University in 2018. While their statement focuses on students, the same applies to researchers. 
+"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." reads a [statement](https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf) by Columbia University in 2018. While their statement focuses on students, the same applies to researchers.
 
 We are thus interested in gender relations (as one aspect of diversity) within German academia. This is important knowledge for equal opportunity commissioners at German universities: How diverse are research projects regarding the gender ratios of their teams? How diverse are individual researchers' collaborations? And how diverse are universities regarding the gender ratio of projects that they host?
 
-Our data is the [GEPRIS dataset](https://gepris.dfg.de/gepris/OCTOPUS) that contains projects funded by the DFG, including the people and institutions involved in those projects upon application. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current data. This could lead to bias and spurious links. We've also derived a probable gender for each person based on the first name. This data stems from [Lax-Martinez, G., Raffo, J. and Saito, K. 2016. "Identifying the Gender of PCT inventors", WIPO Economic Research Working Paper 33.](https://ideas.repec.org/c/wip/eccode/10.html). We validated this assignment by picking the title "Professor" and "Professorin", and comparing them to the gender assignment. Less than 1% of the assignments were in contrast to the titles. However, around 19%  of first names could not be assigned a gender at all. 
-           
+Our data is the [GEPRIS dataset](https://gepris.dfg.de/gepris/OCTOPUS) that contains projects funded by the DFG, including the people and institutions involved in those projects upon application. Please note that the GEPRIS data does not consider time, meaning that locations and titles represent the most current data. This could lead to bias and spurious links. We've also derived a probable gender for each person based on the first name. This data stems from [Lax-Martinez, G., Raffo, J. and Saito, K. 2016. "Identifying the Gender of PCT inventors", WIPO Economic Research Working Paper 33.](https://ideas.repec.org/c/wip/eccode/10.html). We validated this assignment by picking the title "Professor" and "Professorin", and comparing them to the gender assignment. Less than 1% of the assignments were in contrast to the titles, meaning that we would assume a similar error ratio for the entire data set. Additionally, around 19% of first names could not be assigned a gender at all.
+
 ### <a name="abstraction"></a> Data / task abstraction
+
+The original GEPRIS dataset is made up of tables of mainly nominal data (project IDs, person IDs, institution IDs, names, institution address...). We've created additional nominal data for an inferred gender and spatial data (geo position) for the insitutions. Beyond that, we calculated a project_gender_index. This is value between 0 and 1, based on the gender ratio of all people involved in a specific project (that has more than one person). 0 indicates that there are only men in a project whereas 1 indicates that there are only women in a project. Following, the person_gender_index is the mean of project_gender_index for all projects a person is involved in and institution_gender_index is the mean of person_gender_index of all people related to that institution. 
 Dataset overall: tables
 Project IDs: nominal
 Person IDs: nominal
@@ -57,18 +59,18 @@ Insitution adress: position
 
 Discovery distribution. Browse topology. Identify & compare universities & individuals.
 (Formulate the tasks in a domain-independent vocabulary. How did you prepare (aggregate, filter...) the data to support the tasks?)
-           
+
 ### <a name="encoding"></a> Visual encoding / interaction design
 (Describe the visual encoding and why you decided for it. What interaction types did you use and why?)
-           
+
 ### <a name="algorithm"></a>Algorithm design
 (How did you make sure that the computational complexity of your solution is appropriate? What is the bottleneck with respect to performance?)
-            
-## <a name="validation"></a> Validation 
+
+## <a name="validation"></a> Validation
 (Validate your design and document lessons learned: Conduct an informal validation with at least one person who has not seen the visualization before. Let the person use the visualization and comment on it (“think aloud”; https://en.wikipedia.org/wiki/Think_aloud_protocol). Try to address the threats mentioned in the Munzner 2009 paper for the first three categories (domain, data/task, and visual encoding / interaction) and summarize the person’s answers. What did you learn from the validation for possible improvements of your visualization?)
 
 ## <a name="installation"></a> Installation
-(How can I install the visualization project (step-by-step manual)? 
+(How can I install the visualization project (step-by-step manual)?
 
 ## <a name="manual"></a> Manual
 (A brief manual about how to use the software. For this it makes sense to use screencasts or screenshots.)
