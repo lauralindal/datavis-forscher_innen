@@ -2,6 +2,9 @@
 <html>
 <head>
   <title>A D3 map</title>
+
+<meta charset="UTF-8">
+
   <script src='https://d3js.org/d3.v5.min.js'></script>
   <script src="https://d3js.org/d3-zoom.v1.min.js"></script>
   <script src='data/schland.geo.js'></script>
@@ -15,10 +18,12 @@
 	  }
   .map {
 		box-shadow: 0px 0px 5px #ccc;
+		margin-top: 20px;
+		margin-left: 20px;
 	  }
 	  
 	.institute-circle {
-		opacity: 0.5;
+		/*opacity: 0.5;*/
 	}
 	
 	.institute-circle:hover {
@@ -29,21 +34,13 @@
 	.info {
 		width: 600px;
 		height: 600px;
-				box-shadow: 0px 0px 5px #ccc;
-
-		// position: fixed;
-		top: 50px;
-		left: 50px;
-		
+		box-shadow: 0px 0px 5px #ccc;
 		margin-left: 900px;
-		margin-bottom: -600px;
+		margin-bottom: -640px;
+		margin-top: 30px;
 		background-color: #fff;
-		z-index:1000;
-		
-		
-		display:block;
-		/*display:none;*/
-		
+		z-index:1000;		
+		display:none;
 		padding: 10px 20px;
 
 	}
@@ -58,11 +55,25 @@
 <body>
 	
 	<div class="info">
-		<h1 class="institute-name">Institute Name</h1>
 	</div>
   <script>
 	  
+var backgroundColor = "#ccc";
 
+// problem hue range not good for viz, better brightness range
+var color = d3.scaleLinear()
+    .domain([0, 1])
+    .range(["blue", "red"]);
+
+var radius = d3.scaleLinear()
+	.domain([1,2922])
+	.rangeRound([3,10]) // instead of range, to avoid blurry
+
+
+// load researcher data	
+var topResearchers = d3.csv("data/top_researchers_by_projects.csv").then(function(data) {
+  topResearchers = data;
+});		
 
 var width = 800,
     height = 800;
@@ -71,8 +82,9 @@ var map = d3.select('body')
   .append('svg')
   .attr('width', width)
   .attr('height', height)
-  .attr('class','map');
-  
+  .attr('class','map')
+  .style('background-color',backgroundColor)
+  ;
 
 var deutschland = map.append('g');
 
@@ -90,32 +102,98 @@ deutschland.selectAll('path')
   .data(schland.features)
   .enter()
   .append('path')
-  .attr('fill', '#fff')
-  .attr('stroke', '#ccc')
-  .attr('d', geoPath)
-  .attr('radius','100');
+  .attr('fill', '#888')
+  .attr('stroke', '#000')
+  .attr('d', geoPath);
 
-// problem hue range not good for viz, better brightness range
-var color = d3.scaleLinear()
-    .domain([0, 1])
-    .range(["blue", "red"]);
 
-color(20); // "#9a3439"
-color(50); // "#7b5167"
+ function showInstituteData(institut) {
+ 	// clear old data
+  	d3.select('.info').style('display','block').selectAll("*").remove();
+	  console.log(institut.properties.name + ":" + institut.properties.institution_gender_index);
 
-var radius = d3.scaleLinear()
-	.domain([1,2922])
-	.range([3,10])
+	  d3.select('.info').append('h1').attr('class','institute-name').text(institut.properties.name);
+	  
+	  // get researchers from this institute, and only get those with gender index defined
+	  var instituteResearchers = topResearchers.filter(function(d){return d.institution_id==institut.properties.institution_id && d.person_gender_index != "";});	
+
+	  // sort by poroject count
+	  instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count)));
+
+	  // create barchart
+
+	  var svg = d3.select('.info')
+		  .style('background-color',backgroundColor)
+		  .append('svg')
+		  .attr('width',500)
+		  .attr('height',500);
+
+	  // margins for the rectangles
+		var margin = {
+			top: 20,
+			right: 20,
+			bottom: 30,
+			left: 50
+		},
+		width = +svg.attr("width") - margin.left - margin.right,
+		height = +svg.attr("height") - margin.top - margin.bottom,
+		g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var x = d3.scaleBand() // scaleband for barcharts
+		.rangeRound([0, width])
+		.padding(0.1)
+		.domain(instituteResearchers.map(function (d) {
+			return d.person_id;
+		}));
+
+		var y = d3.scaleLinear()
+		.rangeRound([height, 0])
+		.domain([0, d3.max(instituteResearchers, function (d) {
+				return Number(d.project_count);
+			})]);
+		
+		// create the x axis
+		g.append("g")
+		.call(d3.axisBottom(x))
+		.attr("transform", "translate(0," + height + ")")
+
+		// create the y axis
+		g.append("g")
+		.call(d3.axisLeft(y))
+		.append("text")
+		.attr("fill", "#000")
+		.attr("transform", "rotate(-90)")
+		.attr("y", 6)
+		.attr("dy", "-40")
+		.attr("text-anchor", "end")
+		.text("Anzahl Projekte");
+
+		// create the bars
+		g.selectAll(".bar")
+		.data(instituteResearchers)
+		.enter().append("rect")
+		.attr("fill", function (d) {
+			console.log(d);
+			return color(d.person_gender_index);
+		})
+		.attr("x", function (d) {
+			return x(d.person_id);
+		})
+		.attr("y", function (d) {
+			return y(Number(d.project_count));
+		})
+		.attr("width", x.bandwidth())
+		.attr("height", function (d) {
+			return height - y(Number(d.project_count));
+		})
+		.append("svg:title") // TITLE APPENDED HERE
+    .text(function(person) { return person.name + "\n" + (Math.round(person.person_gender_index*100)/100); });
+		;
+ }
 	 
 var institute = map.append('g');
-		
-var topResearchers = d3.csv("data/top_researchers_by_projects.csv").then(function(data) {
-  console.log(data[0]);
-});		
-		
-			
 institute.selectAll('circle')
-		    .data(institute_data.features.filter(function(d){return d.properties.total_projects_count>5;}))
+	.data(institute_data.features.filter(function(d){return d.properties.total_projects_count>5;}))
   .enter()
   .append('circle')
   .attr('r', function(d,i) {
@@ -127,77 +205,12 @@ institute.selectAll('circle')
 	   return color(d.properties.institution_gender_index); 
 	})
   .attr('stroke-width', 0)
-  //.attr('d', geoPath)
-  .on('click', function(institut){
-	  console.log(institut.properties.name + ":" + institut.properties.institution_gender_index);
-	  d3.select('.institute-name').text(institut.properties.name);
-	  
-	  var instituteResearchers = topResearchers.filter(function(d){return d.institution_id==institut.properties.id;})
-	  
-	  // create barchart
+  .attr('class','institute-circle')
+  .on('click', showInstituteData)
+	.append("svg:title") // TITLE APPENDED HERE
+    .text(function(institut) { return institut.properties.name + "\n" + (Math.round(institut.properties.institution_gender_index*100)/100); });
 	
-	  var svg = d3.select('.info')
-	  .append('svg')
-		margin = {
-			top: 20,
-			right: 20,
-			bottom: 30,
-			left: 50
-		},
-		width = +svg.attr("width") - margin.left - margin.right,
-		height = +svg.attr("height") - margin.top - margin.bottom,
-		g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")"),
-		var x = d3.scaleBand()
-		.rangeRound([0, width])
-		.padding(0.1)
-		.domain(instituteResearchers.map(function (d) {
-			return d.person_id;
-		}));
-		var y = d3.scaleLinear()
-		.rangeRound([height, 0]);
-		.domain([0,, d3.max(data, function (d) {
-				return Number(d.project_count);
-			})]);
-		
-		/*
-		
-		g.append("g")
-	.attr("transform", "translate(0," + height + ")")
-	.call(d3.axisBottom(x))
 
-	g.append("g")
-	.call(d3.axisLeft(y))
-	.append("text")
-	.attr("fill", "#000")
-	.attr("transform", "rotate(-90)")
-	.attr("y", 6)
-	.attr("dy", "0.71em")
-	.attr("text-anchor", "end")
-	.text("Speed");
-
-	g.selectAll(".bar")
-	.data(data)
-	.enter().append("rect")
-	.attr("class", "bar")
-	.attr("x", function (d) {
-		return x(d.Run);
-	})
-	.attr("y", function (d) {
-		return y(Number(d.Speed));
-	})
-	.attr("width", x.bandwidth())
-	.attr("height", function (d) {
-		return height - y(Number(d.Speed));
-	});
-		
-		*/
-
-var y = d3.scaleLinear()
-	.rangeRound([height, 0]);
-	  
-  })
-  .attr('class','institute-circle');
-  
 var zoom = d3.zoom();
 
 map.call(d3.zoom()

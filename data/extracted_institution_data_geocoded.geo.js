@@ -1,4 +1,4 @@
-var institute_data =  {
+﻿var institute_data =  {
    "type": "FeatureCollection",
    "features": [
   {
