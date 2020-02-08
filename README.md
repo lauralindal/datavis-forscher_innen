@@ -38,7 +38,7 @@ Geodata from ?
 
 External libraries in addition to d3.js?
 
-##  <a name="design"></a> Design Decicions based on “Four Nested Levels of Visualization Design” by Munzner
+##  <a name="design"></a> Design Decisions based on “Four Nested Levels of Visualization Design” by Munzner
 
 ### <a name="domain"></a> Domain problem characterization
 "There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." reads a [statement](https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf) by Columbia University in 2018. While their statement focuses on students, the same applies to researchers.
@@ -49,18 +49,15 @@ Our data is the [GEPRIS dataset](https://gepris.dfg.de/gepris/OCTOPUS) that cont
 
 ### <a name="abstraction"></a> Data / task abstraction
 
-The original GEPRIS dataset is made up of tables of mainly nominal data (project IDs, person IDs, institution IDs, names, institution address...). We've created additional nominal data for an inferred gender and spatial data (geo position) for the insitutions. Beyond that, we calculated a project_gender_index. This is value between 0 and 1, based on the gender ratio of all people involved in a specific project (that has more than one person). 0 indicates that there are only men in a project whereas 1 indicates that there are only women in a project. Following, the person_gender_index is the mean of project_gender_index for all projects a person is involved in and institution_gender_index is the mean of person_gender_index of all people related to that institution. 
-Dataset overall: tables
-Project IDs: nominal
-Person IDs: nominal
-Person Gender: nominal
-Project role: nominal
-Insitution adress: position
+The original GEPRIS dataset is made up of tables of mainly nominal data (project IDs, person IDs, institution IDs, names, institution address...). We've created additional nominal data for an inferred gender and spatial data (geological position) for the institutions. Beyond that, we calculated a project_gender_index. This is value between 0 and 1, based on the gender ratio of all people involved in a specific project (that has more than one person). 0 indicates that there are only men in a project whereas 1 indicates that there are only women in a project. Following, the person_gender_index is the mean of project_gender_index for all projects a person is involved in and institution_gender_index is the mean of person_gender_index of all people related to that institution. Ordinal data consists of the amount of projects that a researcher is involved in (in order to find the top 10 researchers per institution) as well as that number summed up for each institution.
 
-Discovery distribution. Browse topology. Identify & compare universities & individuals.
-(Formulate the tasks in a domain-independent vocabulary. How did you prepare (aggregate, filter...) the data to support the tasks?)
+The tasks for this data are to discover distributions, browse the topology and identify & compare institutions.
 
 ### <a name="encoding"></a> Visual encoding / interaction design
+
+We decided to explain a bit about the data we used and how we used it first in order to allow for critical thinking. Thus, some information is displayed in scrollable interaction before we display the main visualization. Said information is TODO.
+
+We decided to use a *map* to display the institutions in an *overview* and *bar charts for detail*. The map helps the user to find an orientation but also to get a first impression of the general distribution of data. The *dot size* for each institution represents the amount of projects that people belonging to that institution are involved in. The *color* of each dot represents the institution_gender_index. Users can zoom into the map in order to identify individual institutions. On click, we will provide further detail about the institution. Assuming that the researchers involved in the most projects can also have the most impact on future projects and their gender ratios, we show these 10 researchers per institution with their person_gender_index, using the same color scheme as before, and the amount of projects they are involved in. This provides an option to real life interaction in which researchers could be approached about strategies they are already using or that can help them diversify their collaborations - depending on said gender index.
 (Describe the visual encoding and why you decided for it. What interaction types did you use and why?)
 
 ### <a name="algorithm"></a>Algorithm design

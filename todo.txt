@@ -33,6 +33,6 @@ instution_id, top_10_active_researchers, gender_index pro personm
 	top_10_active_researchers berechnet nach anzahl projecte
 
 # TODO
-- location der unis geocoding
-- daten aufbereiten
-
+- display gender_index (on hover?)
+- display names instead of ids
+- create scrollable in order to display a bit more information before showing the map
