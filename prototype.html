@@ -68,9 +68,9 @@
 <body>
 
   <div class="pre-info">
-    <h1>Gendered collaboration amongst German researchers</h1>
+    <h1>Gendered collaboration in German research</h1>
     <h2>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></h2>
-    <h2>However, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder gender inclusion in fields that have traditionally been shaped by male networks.</h2>
+    <h2>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been shaped by white male networks, such as academia.</h2>
     <h2>So, how diverse are German research projects regarding the gender ratios of their teams?</h2>
     <h2>And how diverse are individual researchers' collaborations?</h2>
     <h2></h2>
@@ -96,6 +96,13 @@
   </div>
 
   <script>
+
+    // visualize overall ratio of inferred gender in the dataset
+    var genderRatio = d3.csv("data/gender_ratio_in_dataset.csv").then(function(data) {
+      genderRatio = data;
+    });
+
+
     var backgroundColor = "#ccc";
 
     // problem hue range not good for viz, better brightness range
