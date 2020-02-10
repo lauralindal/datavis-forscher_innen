@@ -69,27 +69,46 @@
 
   <div class="pre-info">
     <h1>Gendered collaboration in German research</h1>
-    <h2>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></h2>
-    <h2>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been shaped by white male networks, such as academia.</h2>
+    <h2>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a
+        href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></h2>
+    <h2>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been
+      shaped by white male networks, such as academia.</h2>
     <h2>So, how diverse are German research projects regarding the gender ratios of their teams?</h2>
-    <h2>And how diverse are individual researchers' collaborations?</h2>
+    <h2>And how gender diverse are individual researchers' collaborations?</h2>
     <h2></h2>
   </div>
 
   <div class="scrollable-1">
     <h2>We're looking into one of the largest German institutions to fund research projects.</h2>
     <h2>The overall gender ratio of people who receive funding is already... unequal.</h2>
-    <h2>TODO bar chart overall gender ratio</h2>
+    <h2>TODO bar chart overall_gender_data</h2>
   </div>
 
   <div class="scrollable-1">
-    <h2>Let's look at collaborations more specifically. This will reduce our dataset...</h2>
-    <h2>TODO pie chart (?) for collabs and single person projects?</h2>
+    <h2>Stay critical of this data, though. Because DFG does not ask for gender, we had to infer it from the researcher's first name.</h2>
+    <h2>To validate our assumptions, we compared a subset to the title "Professor"/"Professorin", which are the gendered German terms for professors.</h2>
+    <h3>You'll see that in 70% of the cases, the inference of a male gender matches the title. In 79% of the cases, the inference of a female gender matches the title. Please also note that we were unable to infer outside of the gender binary due to
+      the lack of a dataset.</h3>
+    <h2>TODO bar chart prof_gender_data (two stacked bars, horizontal: total length is prof_male/prof_female, subbars are mismatch/unclear/unassigned)</h2>
   </div>
 
   <div class="scrollable-1">
-    <h2>If we now calculate the gender ratio within each project, we will receive a distribution like so.</h2>
-    <h2>TODO histogram for project_gender_index in 10 bars ? </h2>
+    <h2>Not every project funded by the DFG is a collaboration. We will only consider projects in which more than one person is involved. This will reduce our dataset.</h2>
+    <h2>TODO pie chart (?) for single_person_project_or_collab</h2>
+  </div>
+
+  <div class="scrollable-1">
+    <h2>If we now calculate the gender ratio within each collaborative project, we will receive a distribution like so.</h2>
+    <h2>TODO histogram for project_gender_index['gender_index'] in 10 bars </h2>
+  </div>
+
+  <div class="scrollable-1">
+    <h2>What does this mean?</h2>
+    <h2>67% of collaborative projects funded by the DFG involve only men, whereas 4% involve only women. Collaboration is better / worse than the overll ratio of funded researchers.</h2>
+  </div>
+
+  <div class="scrollable-1">
+    <h2>You can now look at individual insitutions and their gender index, based on the researchers associated with them.</h2>
   </div>
 
   <div class="info">
@@ -101,7 +120,7 @@
     // problem hue range not good for viz, better brightness range
     var color = d3.scaleLinear()
       .domain([0, 1])
-      .range(["blue", "red"]);
+      .range(["DodgerBlue", "DeepPink"]);
 
     var radius = d3.scaleLinear()
       .domain([1, 2922])
