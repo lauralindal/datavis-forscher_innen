@@ -1,2 +1,5 @@
-,M,F,unclear,unassigned
-0,35632,10988,981,10339
+,labels,data
+0,all_male,35632
+1,all_female,10988
+2,all_unclear,981
+3,all_unassigned,10339
