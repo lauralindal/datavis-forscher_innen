@@ -135,13 +135,15 @@ blockquote {
     <p>67% of collaborative projects funded by the DFG involve only men, whereas 4% involve only women. Collaboration is better / worse than the overll ratio of funded researchers.</p>
   </div>
 
-  <div class="scrollable-1 scroll-info-text">
+  <div id="map" class="scrollable-1 scroll-info-text">
     <p>You can now look at individual insitutions and their gender index, based on the researchers associated with them.</p>
+	  <div class="info">
+
+	  </div>
+
   </div>
 
-  <div class="info">
-
-  </div>
+  
 </div>
 
   <script>
@@ -381,7 +383,7 @@ showWelcome();
 //scroll('preinfo', '50%', showWelcome, showMap);
 //scroll('overall_gender_data', '50%', function(){console.log("test1")}, function(){console.log("test2")});
 
-scroll('overall_gender_data', '50%', showMap, showWelcome);
+scroll('map', '50%', showMap, showWelcome);
 
 
 //new scroll('div4', '75%', divide, grid);
