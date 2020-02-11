@@ -1,5 +1,5 @@
-labels,data
-all_male,35632
-all_female,10988
-all_unclear,981
-all_unassigned,10339
+gender,count
+male,35632
+female,10988
+unclear,981
+unassigned,10339

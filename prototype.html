@@ -77,7 +77,7 @@
     }
 
     .welcome-pic {
-      background-image: url('img/how_it_works.png');
+      background-image: url('img/welcome.jpeg');
       background-repeat: no-repeat;
       background-size: contain;
       width: 100%;
@@ -93,15 +93,7 @@
     }
 
     .prof_gender_data {
-      background-image: url('img/prof_gedner_data.png');
-      background-repeat: no-repeat;
-      background-size: contain;
-      width: 100%;
-      height: 100%;
-    }
-
-    .single_person_project_or_collab {
-      background-image: url('img/single_person_project_or_collab.png');
+      background-image: url('img/prof_gender_data.png');
       background-repeat: no-repeat;
       background-size: contain;
       width: 100%;
@@ -147,34 +139,29 @@
         </p>
         <p>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been
           shaped by networks of white men, such as academia.</p>
-        <p>How diverse are German research projects regarding the gender ratio of their teams?</p>
-        <p>How gender diverse are individual researchers' collaborations?</p>
-        <p></p>
+        <p><strong>How diverse are German research projects regarding the gender ratio of their teams?</strong></p>
+        <p><strong>How gender diverse are individual researchers' collaborations?</strong></p>
       </div>
     </div>
 
     <div id="overall_gender_data" class="scrollable-1 scroll-info-text">
-      <p>We're looking into one of the largest German institutions to fund research projects.</p>
-      <p>The overall gender ratio of people who receive funding is already... unequal.</p>
-      <p>TODO bar chart overall_gender_data</p>
+      <p>Let's find out from data by one of the largest German institutions to fund research projects: <a href="https://gepris.dfg.de/gepris/OCTOPUS?language=en">Deutsche Forschungsgemeinschaft</a>.</p>
+      <p>They do not provide information on the gender of their research, so with <a href="https://ideas.repec.org/c/wip/eccode/10.html">a little help</a>, we had to infer a gender based on the researcher's first name.</p>
+      <p><strong>This is the gender distribution of all researchers funded by the DFG.</strong></p>
     </div>
 
     <div id="prof_gender_data" class="scrollable-1 scroll-info-text">
-      <p>Stay critical of this data, though. Because DFG does not ask for gender, we had to infer it from the researcher's first name.</p>
-      <p>To validate our assumptions, we compared a subset to the title "Professor"/"Professorin", which are the gendered German terms for professors.</p>
-      <p class="note">You'll see that in 70% of the cases, the inference of a male gender matches the title. In 79% of the cases, the inference of a female gender matches the title. Please also note that we were unable to infer outside of the gender
-        binary due to the lack of a dataset.</p>
-      <p>TODO bar chart prof_gender_data (two stacked bars, horizontal: total length is prof_male/prof_female, subbars are mismatch/unclear/unassigned)</p>
-    </div>
-
-    <div id="single_person_project_or_collab" class="scrollable-1 scroll-info-text">
-      <p>Not every project funded by the DFG is a collaboration. We will only consider projects in which more than one person is involved. This will reduce our dataset.</p>
-      <p>TODO pie chart (?) for single_person_project_or_collab</p>
+      <p>To stay critical of this data and validate our inference, we used a subset of the data that contains only professors.</p>
+      <p>Since the title "Professor" / "Professorin" has a gendered connotation in German, we could compare the gendered title to our inferred gender.</p>
+      <p class="note">Please also note that we were unable to infer outside of the gender binary due to the lack of such a dataset.</p>
+      <p>Mistakes are represented in gray and contain three error classes: a mismatch between title and inferred gender, a gender could not be assigned or the first name was not recognized.</p>
+      <p><strong>This is the ratio of correct gender inference for the subset of professors.</strong></p>
     </div>
 
     <div id="project_gender_index" class="scrollable-1 scroll-info-text">
-      <p>If we now calculate the gender ratio within each collaborative project, we will receive a distribution like so.</p>
-      <p>TODO histogram for project_gender_index['gender_index'] in 10 bars </p>
+      <p>Looking at each funded project with more than one person, we can now calculate the gender ratio per project.</p>
+      <p>Thus, the project gender index indicates the gender ratio in a project, where 0 means there are only men and 1 means there are only women. In detail, there are 10488 all-male projects and 667 all-female projects.</p>
+      <p><strong>This histogram shows the distribution of the project gender index.</strong></p>
     </div>
 
     <div class="scrollable-1 scroll-info-text">
@@ -206,6 +193,10 @@
     // load researcher data
     var topResearchers = d3.csv("data/top_researchers_by_projects.csv").then(function(data) {
       topResearchers = data;
+    });
+
+    var allResearchersGender = d3.csv("data/gender_ratio_in_dataset.csv").then(function(data) {
+      allResearchersGender = data;
     });
 
     // get the dynamic dims of chart
@@ -243,17 +234,6 @@
         d3.select('.chart')
           .append('div')
           .attr('class', 'prof_gender_data');
-        $('.chart').fadeIn(100)
-      });
-    };
-
-    var showSingleOrCollab = function() {
-      // clear chart
-      $('.chart').fadeOut(100, function() {
-        d3.select('.chart').selectAll("*").remove();
-        d3.select('.chart')
-          .append('div')
-          .attr('class', 'single_person_project_or_collab');
         $('.chart').fadeIn(100)
       });
     };
@@ -468,8 +448,7 @@
 
     scroll('overall_gender_data', '50%', showOverallGenderData, showWelcome);
     scroll('prof_gender_data', '50%', showProfGenderValidation, showOverallGenderData);
-    scroll('single_person_project_or_collab', '50%', showSingleOrCollab, showProfGenderValidation);
-    scroll('project_gender_index', '50%', showProjectGenderIndex, showSingleOrCollab);
+    scroll('project_gender_index', '50%', showProjectGenderIndex, showProfGenderValidation);
     scroll('map', '50%', showMap, showProjectGenderIndex);
 
 

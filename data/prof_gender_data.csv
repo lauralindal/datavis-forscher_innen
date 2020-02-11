@@ -1,9 +1,3 @@
-labels,data
-prof_male,20658
-prof_male_mismatch,95
-prof_m_unclear,428
-prof_m_unassigned,5593
-prof_female,4281
-prof_female_mismatch,136
-prof_f_unclear,77
-prof_f_unassigned,644
+gender_title,correct,mismatch,unclear,unassigned
+prof_male,20658,95,428,5593
+prof_female,4281,136,77,644
