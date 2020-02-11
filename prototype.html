@@ -24,6 +24,15 @@
       color: #666;
     }
 
+    .fixed-header {
+      width: 100vw;
+      padding: 20px;
+      margin: 0px auto;
+      position: fixed;
+      font-style: bold;
+      font-size: 20px;
+    }
+
     .map {
       box-shadow: 0px 0px 5px #ccc;
     }
@@ -48,10 +57,11 @@
       height: 100vh;
       width: 45vw;
       padding: 20px;
-      margin-top: 33.5px;
+      margin-top: 140px;
     }
 
     .text {
+      margin-top: 100px;
       float: right;
       width: 50vw;
       padding: 20px;
@@ -82,7 +92,7 @@
       height: 100%;
     }
 
-    .prof_gender_data{
+    .prof_gender_data {
       background-image: url('img/prof_gedner_data.png');
       background-repeat: no-repeat;
       background-size: contain;
@@ -90,7 +100,7 @@
       height: 100%;
     }
 
-    .single_person_project_or_collab{
+    .single_person_project_or_collab {
       background-image: url('img/single_person_project_or_collab.png');
       background-repeat: no-repeat;
       background-size: contain;
@@ -98,7 +108,7 @@
       height: 100%;
     }
 
-    .project_gender_index{
+    .project_gender_index {
       background-image: url('img/project_gender_index_hist.png');
       background-repeat: no-repeat;
       background-size: contain;
@@ -121,21 +131,24 @@
 
 <body>
 
+  <div class="fixed-header">
+    <h1>Gendered collaboration in German research</h1>
+  </div>
+
   <div class="chart">
   </div>
 
   <div class="text">
     <div id="preinfo" class="pre-info scroll-info-text">
       <div class="">
-        <h1>Gendered collaboration in German research</h1>
         <p>
           <blockquote>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a
               href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></blockquote>
         </p>
         <p>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been
-          shaped by white male networks, such as academia.</p>
-        <p>So, how diverse are German research projects regarding the gender ratios of their teams?</p>
-        <p>And how gender diverse are individual researchers' collaborations?</p>
+          shaped by networks of white men, such as academia.</p>
+        <p>How diverse are German research projects regarding the gender ratio of their teams?</p>
+        <p>How gender diverse are individual researchers' collaborations?</p>
         <p></p>
       </div>
     </div>
