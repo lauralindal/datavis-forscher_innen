@@ -13,382 +13,455 @@
   <script src="data/extracted_institution_data_geocoded.geo.js"></script>
 
   <style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
 
-*, *:before, *:after {
-  box-sizing: border-box;
-}
+    body {
+      font-family: Trebuchet MS, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      color: #666;
+    }
 
-body {
-  font-family: Trebuchet MS, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  color: #666;
-}
+    .map {
+      box-shadow: 0px 0px 5px #ccc;
+    }
 
-.map {
-  box-shadow: 0px 0px 5px #ccc;
-}
+    .institute-circle {
+      /*opacity: 0.5;*/
+    }
 
-.institute-circle {
-  /*opacity: 0.5;*/
-}
+    .institute-circle:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
 
-.institute-circle:hover {
-  opacity: 1;
-  cursor: pointer;
-}
+    .institute-name {
+      display: block;
+      margin: 0;
+      font-size: 20px;
+    }
 
-.institute-name {
-  display: block;
-  margin: 0;
-  font-size: 20px;
-}
+    .chart {
+      position: fixed;
+      height: 100vh;
+      width: 45vw;
+      padding: 20px;
+      margin-top: 33.5px;
+    }
 
-.chart {
-	position: fixed;
-	height: 100vh;
-	width: 45vw;
-	padding: 20px;
-}
+    .text {
+      float: right;
+      width: 50vw;
+      padding: 20px;
+    }
 
-.text {
-	float: right;
-	width: 50vw;
-	padding: 20px;
-}
+    .info {
+      box-shadow: 0px 0px 5px #ccc;
+      margin-top: 30px;
+      background-color: #fff;
+      z-index: 1000;
+      display: none;
+      padding: 10px 20px;
+    }
 
-.info {
-  box-shadow: 0px 0px 5px #ccc;
-  margin-top: 30px;
-  background-color: #fff;
-  z-index: 1000;
-  display: none;
-  padding: 10px 20px;
-}
+    .welcome-pic {
+      background-image: url('img/how_it_works.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
 
-.welcome-pic {
-	background-image:url('img/welcome.jpeg');
-	background-repeat: no-repeat;
-	background-size: contain;
-	width: 100%;
-	height: 100%;
-}
+    .overall_gender_data {
+      background-image: url('img/gender_ratio_in_dataset.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
 
-.scroll-info-text {
-	font-size: 25px;
+    .prof_gender_data{
+      background-image: url('img/prof_gedner_data.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
 
-	height: 100vh;
-}
+    .single_person_project_or_collab{
+      background-image: url('img/single_person_project_or_collab.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
 
-blockquote {
-	font-style:	italic;
-}
+    .project_gender_index{
+      background-image: url('img/project_gender_index_hist.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
 
+    .scroll-info-text {
+      font-size: 25px;
 
+      height: 100vh;
+    }
 
+    blockquote {
+      font-style: italic;
+    }
   </style>
 
 </head>
 
 <body>
-<div class="chart">
 
-</div>
-<div class="text">
-  <div id="preinfo" class="pre-info scroll-info-text">
-  	<div class="">
-    <h1>Gendered collaboration in German research</h1>
-    <p><blockquote>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a
-        href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></blockquote></p>
-    <p>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been
-      shaped by white male networks, such as academia.</p>
-    <p>So, how diverse are German research projects regarding the gender ratios of their teams?</p>
-    <p>And how gender diverse are individual researchers' collaborations?</p>
-    <p></p>
-  	</div>
+  <div class="chart">
   </div>
 
-  <div id="overall_gender_data" class="scrollable-1 scroll-info-text">
-    <p>We're looking into one of the largest German institutions to fund research projects.</p>
-    <p>The overall gender ratio of people who receive funding is already... unequal.</p>
-    <p>TODO bar chart overall_gender_data</p>
+  <div class="text">
+    <div id="preinfo" class="pre-info scroll-info-text">
+      <div class="">
+        <h1>Gendered collaboration in German research</h1>
+        <p>
+          <blockquote>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a
+              href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></blockquote>
+        </p>
+        <p>Unfortunately, <a href="https://www.equityinstem.org/networks-metaanalysis/">research shows</a> that people tend to form their networks with people who are similar to them, which can hinder diversity in fields that have traditionally been
+          shaped by white male networks, such as academia.</p>
+        <p>So, how diverse are German research projects regarding the gender ratios of their teams?</p>
+        <p>And how gender diverse are individual researchers' collaborations?</p>
+        <p></p>
+      </div>
+    </div>
+
+    <div id="overall_gender_data" class="scrollable-1 scroll-info-text">
+      <p>We're looking into one of the largest German institutions to fund research projects.</p>
+      <p>The overall gender ratio of people who receive funding is already... unequal.</p>
+      <p>TODO bar chart overall_gender_data</p>
+    </div>
+
+    <div id="prof_gender_data" class="scrollable-1 scroll-info-text">
+      <p>Stay critical of this data, though. Because DFG does not ask for gender, we had to infer it from the researcher's first name.</p>
+      <p>To validate our assumptions, we compared a subset to the title "Professor"/"Professorin", which are the gendered German terms for professors.</p>
+      <p class="note">You'll see that in 70% of the cases, the inference of a male gender matches the title. In 79% of the cases, the inference of a female gender matches the title. Please also note that we were unable to infer outside of the gender
+        binary due to the lack of a dataset.</p>
+      <p>TODO bar chart prof_gender_data (two stacked bars, horizontal: total length is prof_male/prof_female, subbars are mismatch/unclear/unassigned)</p>
+    </div>
+
+    <div id="single_person_project_or_collab" class="scrollable-1 scroll-info-text">
+      <p>Not every project funded by the DFG is a collaboration. We will only consider projects in which more than one person is involved. This will reduce our dataset.</p>
+      <p>TODO pie chart (?) for single_person_project_or_collab</p>
+    </div>
+
+    <div id="project_gender_index" class="scrollable-1 scroll-info-text">
+      <p>If we now calculate the gender ratio within each collaborative project, we will receive a distribution like so.</p>
+      <p>TODO histogram for project_gender_index['gender_index'] in 10 bars </p>
+    </div>
+
+    <div class="scrollable-1 scroll-info-text">
+      <p>What does this mean?</p>
+      <p>67% of collaborative projects funded by the DFG involve only men, whereas 4% involve only women. Collaboration is better / worse than the overll ratio of funded researchers.</p>
+    </div>
+
+    <div id="map" class="scrollable-1 scroll-info-text">
+      <p>You can now look at individual insitutions and their gender index, based on the researchers associated with them.</p>
+      <div class="info">
+      </div>
+    </div>
   </div>
-
-  <div class="scrollable-1 scroll-info-text">
-    <p>Stay critical of this data, though. Because DFG does not ask for gender, we had to infer it from the researcher's first name.</p>
-    <p>To validate our assumptions, we compared a subset to the title "Professor"/"Professorin", which are the gendered German terms for professors.</p>
-    <p class="note">You'll see that in 70% of the cases, the inference of a male gender matches the title. In 79% of the cases, the inference of a female gender matches the title. Please also note that we were unable to infer outside of the gender binary due to
-      the lack of a dataset.</p>
-    <p>TODO bar chart prof_gender_data (two stacked bars, horizontal: total length is prof_male/prof_female, subbars are mismatch/unclear/unassigned)</p>
-  </div>
-
-  <div class="scrollable-1 scroll-info-text">
-    <p>Not every project funded by the DFG is a collaboration. We will only consider projects in which more than one person is involved. This will reduce our dataset.</p>
-    <p>TODO pie chart (?) for single_person_project_or_collab</p>
-  </div>
-
-  <div class="scrollable-1 scroll-info-text">
-    <p>If we now calculate the gender ratio within each collaborative project, we will receive a distribution like so.</p>
-    <p>TODO histogram for project_gender_index['gender_index'] in 10 bars </p>
-  </div>
-
-  <div class="scrollable-1 scroll-info-text">
-    <p>What does this mean?</p>
-    <p>67% of collaborative projects funded by the DFG involve only men, whereas 4% involve only women. Collaboration is better / worse than the overll ratio of funded researchers.</p>
-  </div>
-
-  <div id="map" class="scrollable-1 scroll-info-text">
-    <p>You can now look at individual insitutions and their gender index, based on the researchers associated with them.</p>
-	  <div class="info">
-
-	  </div>
-
-  </div>
-
-  
-</div>
 
   <script>
+    var backgroundColor = "#ccc";
 
-var backgroundColor = "#ccc";
+    // problem hue range not good for viz, better brightness range
+    var color = d3.scaleLinear()
+      .domain([0, 1])
+      .range(["DodgerBlue", "DeepPink"]);
 
-// problem hue range not good for viz, better brightness range
-var color = d3.scaleLinear()
-  .domain([0, 1])
-  .range(["DodgerBlue", "DeepPink"]);
+    var radius = d3.scaleLinear()
+      .domain([1, 2922])
+      .rangeRound([3, 10]) // instead of range, to avoid blurry
 
-var radius = d3.scaleLinear()
-  .domain([1, 2922])
-  .rangeRound([3, 10]) // instead of range, to avoid blurry
+    var chartPadding = 20;
 
-var chartPadding = 20;
+    // load researcher data
+    var topResearchers = d3.csv("data/top_researchers_by_projects.csv").then(function(data) {
+      topResearchers = data;
+    });
 
-// load researcher data
-var topResearchers = d3.csv("data/top_researchers_by_projects.csv").then(function(data) {
-  topResearchers = data;
-});
-
-// get the dynamic dims of chart
-var dim = d3.select('.chart').node().getBoundingClientRect();
-var width = dim.width - 2*chartPadding,
-  height = dim.height - 2*chartPadding;
-
-
- var showWelcome = function() {
-
-		// clear chart
- 		$('.chart').fadeOut(100, function(){
- 			d3.select('.chart').selectAll("*").remove();
-
-	 			d3.select('.chart')
-		  .append('div')
-		  .attr('class', 'welcome-pic');
-
- 	  $('.chart').fadeIn(100)
- 		});
-};
-
-var showMap = function() {
-
-// clear chart
- 		$('.chart').fadeOut(100, function(){
-
-	// clear chart
-	d3.select('.chart').selectAll("*").remove();
-
-	var map = d3.select('.chart')
-	  .append('svg')
-	  .attr('width', width)
-	  .attr('height', height)
-	  .attr('class', 'map')
-	  .style('background-color', backgroundColor);
-
-	var deutschland = map.append('g');
-
-	var projection = d3.geoAlbers()
-	  .scale(5000)
-	  .center([11.0, 50.8])
-	  .rotate([0, 0])
-	  .translate([width / 2, height / 2]);
-
-	var geoPath = d3.geoPath()
-	  .projection(projection)
-	  .pointRadius([5]);
-
-	deutschland.selectAll('path')
-	  .data(schland.features)
-	  .enter()
-	  .append('path')
-	  .attr('fill', '#888')
-	  .attr('stroke', '#000')
-	  .attr('d', geoPath);
+    // get the dynamic dims of chart
+    var dim = d3.select('.chart').node().getBoundingClientRect();
+    var width = dim.width - 2 * chartPadding,
+      height = dim.height - 2 * chartPadding;
 
 
-	function clickMapCircle(institut) {
-	  // clear old data
-	  d3.select('.info').style('display', 'block').selectAll("*").remove();
-	  console.log(institut.properties.name + ":" + institut.properties.institution_gender_index);
+    var showWelcome = function() {
+      // clear chart
+      $('.chart').fadeOut(100, function() {
+        d3.select('.chart').selectAll("*").remove();
+        d3.select('.chart')
+          .append('div')
+          .attr('class', 'welcome-pic');
+        $('.chart').fadeIn(100)
+      });
+    };
 
-	  d3.select('.info').append('h1').attr('class', 'institute-name').text(institut.properties.name);
+    var showOverallGenderData = function() {
+      // clear chart
+      $('.chart').fadeOut(100, function() {
+        d3.select('.chart').selectAll("*").remove();
+        d3.select('.chart')
+          .append('div')
+          .attr('class', 'overall_gender_data');
+        $('.chart').fadeIn(100)
+      });
+    };
 
-	  // get researchers from this institute, and only get those with gender index defined
-	  var instituteResearchers = topResearchers.filter(function(d) {
-	    return d.institution_id == institut.properties.institution_id && d.person_gender_index != "";
-	  });
+    var showProfGenderValidation = function() {
+      // clear chart
+      $('.chart').fadeOut(100, function() {
+        d3.select('.chart').selectAll("*").remove();
+        d3.select('.chart')
+          .append('div')
+          .attr('class', 'prof_gender_data');
+        $('.chart').fadeIn(100)
+      });
+    };
 
-	  // sort by poroject count
-	  instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count)));
+    var showSingleOrCollab = function() {
+      // clear chart
+      $('.chart').fadeOut(100, function() {
+        d3.select('.chart').selectAll("*").remove();
+        d3.select('.chart')
+          .append('div')
+          .attr('class', 'single_person_project_or_collab');
+        $('.chart').fadeIn(100)
+      });
+    };
 
-	  // create barchart
+    var showProjectGenderIndex = function() {
+      // clear chart
+      $('.chart').fadeOut(100, function() {
+        d3.select('.chart').selectAll("*").remove();
+        d3.select('.chart')
+          .append('div')
+          .attr('class', 'project_gender_index');
+        $('.chart').fadeIn(100)
+      });
+    };
 
-	  var svg = d3.select('.info')
-	    .style('background-color', backgroundColor)
-	    .append('svg')
-	    .attr('width', 500)
-	    .attr('height', 500);
+    var showMap = function() {
 
-	  // margins for the rectangles
-	  var margin = {
-	      top: 20,
-	      right: 20,
-	      bottom: 30,
-	      left: 50
-	    },
-	    width = +svg.attr("width") - margin.left - margin.right,
-	    height = +svg.attr("height") - margin.top - margin.bottom,
-	    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      // clear chart
+      $('.chart').fadeOut(100, function() {
 
-	  var x = d3.scaleBand() // scaleband for barcharts
-	    .rangeRound([0, width])
-	    .padding(0.1)
-	    .domain(instituteResearchers.map(function(d) {
-	      return d.person_id;
-	    }));
+        // clear chart
+        d3.select('.chart').selectAll("*").remove();
 
-	  var y = d3.scaleLinear()
-	    .rangeRound([height, 0])
-	    .domain([0, d3.max(instituteResearchers, function(d) {
-	      return Number(d.project_count);
-	    })]);
+        var map = d3.select('.chart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .attr('class', 'map')
+          .style('background-color', backgroundColor);
 
-	  // create the x axis
-	  g.append("g")
-	    .call(d3.axisBottom(x))
-	    .attr("transform", "translate(0," + height + ")")
+        var deutschland = map.append('g');
 
-	  // create the y axis
-	  g.append("g")
-	    .call(d3.axisLeft(y))
-	    .append("text")
-	    .attr("fill", "#000")
-	    .attr("transform", "rotate(-90)")
-	    .attr("y", 6)
-	    .attr("dy", "-40")
-	    .attr("text-anchor", "end")
-	    .text("Anzahl Projekte");
+        var projection = d3.geoAlbers()
+          .scale(5000)
+          .center([11.0, 50.8])
+          .rotate([0, 0])
+          .translate([width / 2, height / 2]);
 
-	  // create the bars
-	  g.selectAll(".bar")
-	    .data(instituteResearchers)
-	    .enter().append("rect")
-	    .attr("fill", function(d) {
-	      console.log(d);
-	      return color(d.person_gender_index);
-	    })
-	    .attr("x", function(d) {
-	      return x(d.person_id);
-	    })
-	    .attr("y", function(d) {
-	      return y(Number(d.project_count));
-	    })
-	    .attr("width", x.bandwidth())
-	    .attr("height", function(d) {
-	      return height - y(Number(d.project_count));
-	    })
-	    .append("svg:title") // TITLE APPENDED HERE
-	    .text(function(person) {
-	      return person.name + "\n" + (Math.round(person.person_gender_index * 100) / 100);
-	    });;
-	}
+        var geoPath = d3.geoPath()
+          .projection(projection)
+          .pointRadius([5]);
 
-	var institute = map.append('g');
-	institute.selectAll('circle')
-	  .data(institute_data.features.filter(function(d) {
-	    return d.properties.total_projects_count > 5;
-	  }))
-	  .enter()
-	  .append('circle')
-	  .attr('r', function(d, i) {
-	    return radius(d.properties.total_projects_count);
-	  })
-	  .attr('cx', function(d) {
-	    return projection(d.geometry.coordinates)[0]
-	  })
-	  .attr('cy', function(d) {
-	    return projection(d.geometry.coordinates)[1]
-	  })
-	  .attr('fill', function(d, i) {
-	    return color(d.properties.institution_gender_index);
-	  })
-	  .attr('stroke-width', 0)
-	  .attr('class', 'institute-circle')
-	  .on('click', clickMapCircle)
-	  .append("svg:title") // TITLE APPENDED HERE
-	  .text(function(institut) {
-	    return institut.properties.name + "\n" + (Math.round(institut.properties.institution_gender_index * 100) / 100);
-	  });
+        deutschland.selectAll('path')
+          .data(schland.features)
+          .enter()
+          .append('path')
+          .attr('fill', '#888')
+          .attr('stroke', '#000')
+          .attr('d', geoPath);
 
 
-	// map zoom handling
-	var zoom = d3.zoom();
+        function clickMapCircle(institut) {
+          // clear old data
+          d3.select('.info').style('display', 'block').selectAll("*").remove();
+          console.log(institut.properties.name + ":" + institut.properties.institution_gender_index);
 
-	map.call(d3.zoom()
-	  .extent([
-	    [0, 0],
-	    [width, height]
-	  ])
-	  .scaleExtent([1, 50])
-	  .on("zoom", zoomed));
+          d3.select('.info').append('h1').attr('class', 'institute-name').text(institut.properties.name);
 
-	function zoomed() {
-	  deutschland.attr("transform", d3.event.transform);
-	  institute.attr("transform", d3.event.transform);
+          // get researchers from this institute, and only get those with gender index defined
+          var instituteResearchers = topResearchers.filter(function(d) {
+            return d.institution_id == institut.properties.institution_id && d.person_gender_index != "";
+          });
 
-	  var scaleFactor = d3.event.transform.k;
+          // sort by project count
+          instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count)));
 
-	  institute.selectAll('circle')
-	    .attr('r', function(d, i) {
-	      return radius(d.properties.total_projects_count) / (scaleFactor * 0.8);
-	    })
-	}
+          // create barchart
 
-	$('.chart').fadeIn(100)
- 	});
-};
+          var svg = d3.select('.info')
+            .style('background-color', backgroundColor)
+            .append('svg')
+            .attr('width', 500)
+            .attr('height', 500);
 
-// scroll handling
+          // margins for the rectangles
+          var margin = {
+              top: 20,
+              right: 20,
+              bottom: 30,
+              left: 50
+            },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom,
+            g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//waypoints scroll constructor
-function scroll(selector, offset, func1, func2){
-  return new Waypoint({
-    element: document.getElementById(selector),
-    handler: function(direction) {
-       direction == 'down' ? func1() : func2();
-    },
-    offset: offset
-  });
-};
+          var x = d3.scaleBand() // scaleband for barcharts
+            .rangeRound([0, width])
+            .padding(0.1)
+            .domain(instituteResearchers.map(function(d) {
+              return d.person_id;
+            }));
 
-showWelcome();
+          var y = d3.scaleLinear()
+            .rangeRound([height, 0])
+            .domain([0, d3.max(instituteResearchers, function(d) {
+              return Number(d.project_count);
+            })]);
 
-//triger these functions on page scroll
-//scroll('preinfo', '50%', showWelcome, showMap);
-//scroll('overall_gender_data', '50%', function(){console.log("test1")}, function(){console.log("test2")});
+          // create the x axis
+          g.append("g")
+            .call(d3.axisBottom(x))
+            .attr("transform", "translate(0," + height + ")")
 
-scroll('map', '50%', showMap, showWelcome);
+          // create the y axis
+          g.append("g")
+            .call(d3.axisLeft(y))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "-40")
+            .attr("text-anchor", "end")
+            .text("Anzahl Projekte");
+
+          // create the bars
+          g.selectAll(".bar")
+            .data(instituteResearchers)
+            .enter().append("rect")
+            .attr("fill", function(d) {
+              console.log(d);
+              return color(d.person_gender_index);
+            })
+            .attr("x", function(d) {
+              return x(d.person_id);
+            })
+            .attr("y", function(d) {
+              return y(Number(d.project_count));
+            })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) {
+              return height - y(Number(d.project_count));
+            })
+            .append("svg:title") // TITLE APPENDED HERE
+            .text(function(person) {
+              return person.name + "\n" + (Math.round(person.person_gender_index * 100) / 100);
+            });;
+        }
+
+        var institute = map.append('g');
+        institute.selectAll('circle')
+          .data(institute_data.features.filter(function(d) {
+            return d.properties.total_projects_count > 5;
+          }))
+          .enter()
+          .append('circle')
+          .attr('r', function(d, i) {
+            return radius(d.properties.total_projects_count);
+          })
+          .attr('cx', function(d) {
+            return projection(d.geometry.coordinates)[0]
+          })
+          .attr('cy', function(d) {
+            return projection(d.geometry.coordinates)[1]
+          })
+          .attr('fill', function(d, i) {
+            return color(d.properties.institution_gender_index);
+          })
+          .attr('stroke-width', 0)
+          .attr('class', 'institute-circle')
+          .on('click', clickMapCircle)
+          .append("svg:title") // TITLE APPENDED HERE
+          .text(function(institut) {
+            return institut.properties.name + "\n" + (Math.round(institut.properties.institution_gender_index * 100) / 100);
+          });
 
 
-//new scroll('div4', '75%', divide, grid);
-//new scroll('div6', '75%', barChart, divide);
+        // map zoom handling
+        var zoom = d3.zoom();
 
+        map.call(d3.zoom()
+          .extent([
+            [0, 0],
+            [width, height]
+          ])
+          .scaleExtent([1, 50])
+          .on("zoom", zoomed));
+
+        function zoomed() {
+          deutschland.attr("transform", d3.event.transform);
+          institute.attr("transform", d3.event.transform);
+
+          var scaleFactor = d3.event.transform.k;
+
+          institute.selectAll('circle')
+            .attr('r', function(d, i) {
+              return radius(d.properties.total_projects_count) / (scaleFactor * 0.8);
+            })
+        }
+
+        $('.chart').fadeIn(100)
+      });
+    };
+
+    // scroll handling
+
+    //waypoints scroll constructor
+    function scroll(selector, offset, func1, func2) {
+      return new Waypoint({
+        element: document.getElementById(selector),
+        handler: function(direction) {
+          direction == 'down' ? func1() : func2();
+        },
+        offset: offset
+      });
+    };
+
+    showWelcome();
+
+    //triger these functions on page scroll
+    //scroll('preinfo', '50%', showWelcome, showOverallGenderData);
+    //scroll('overall_gender_data', '50%', function(){console.log("test1")}, function(){console.log("test2")});
+
+    scroll('overall_gender_data', '50%', showOverallGenderData, showWelcome);
+    scroll('prof_gender_data', '50%', showProfGenderValidation, showOverallGenderData);
+    scroll('single_person_project_or_collab', '50%', showSingleOrCollab, showProfGenderValidation);
+    scroll('project_gender_index', '50%', showProjectGenderIndex, showSingleOrCollab);
+    scroll('map', '50%', showMap, showProjectGenderIndex);
+
+
+    //new scroll('div4', '75%', divide, grid);
+    //new scroll('div6', '75%', barChart, divide);
   </script>
 </body>
 
