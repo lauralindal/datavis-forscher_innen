@@ -191,12 +191,17 @@
     var chartPadding = 20;
 
     // load researcher data
-    var topResearchers = d3.csv("data/top_researchers_by_projects.csv").then(function(data) {
+    var topResearchers = d3.csv("data/top_researchers_by_projects_detailed.csv").then(function(data) {
       topResearchers = data;
     });
 
     var allResearchersGender = d3.csv("data/gender_ratio_in_dataset.csv").then(function(data) {
       allResearchersGender = data;
+    });
+
+    // load person data (person_id, name, first_name, gender)
+    var personData = d3.csv("data/reduced_data_person.csv").then(function(data) {
+      personData = data;
     });
 
     // get the dynamic dims of chart
@@ -285,7 +290,9 @@
           .attr('d', geoPath);
 
 
+        // show barchart of institute, top10 researchers
         function clickMapCircle(institut) {
+
           // clear old data
           d3.select('.info').style('display', 'block').selectAll("*").remove();
           console.log(institut.properties.name + ":" + institut.properties.institution_gender_index);
@@ -298,32 +305,99 @@
           });
 
           // sort by project count
-          instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count)));
+          instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count))).reverse();
+
+          // 
+          console.log(instituteResearchers);
 
           // create barchart
-
           var svg = d3.select('.info')
             .style('background-color', backgroundColor)
             .append('svg')
             .attr('width', 500)
-            .attr('height', 500);
+            .attr('height', (instituteResearchers.length+1)*38);
 
           // margins for the rectangles
           var margin = {
               top: 20,
               right: 20,
               bottom: 30,
-              left: 50
+              left: 200
             },
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom,
             g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+            var x = d3.scaleLinear()
+            .rangeRound([0, width])
+            .domain([0, d3.max(instituteResearchers, function(d) {
+              return Number(d.project_count);
+            })])
+            .nice()
+            ;
+
+            var y = d3.scaleBand()
+            .rangeRound([height, 0])
+            .domain(instituteResearchers.map(function(d) {
+              return d.name;
+            }))
+            .paddingInner(0.3);
+
+            console.log(instituteResearchers.map(function(d) {
+              return d.name;
+            }))
+
+					// create the x axis
+          g.append("g")
+            .call(
+            	d3.axisBottom(x)
+            	)
+            .attr("transform", "translate(0," + (height + 6) + ")");
+           
+                    // create the y axis
+          g.append("g")
+            .call(
+            	d3.axisLeft(y).tickSize(6)
+            	).attr("stroke-width",0)
+            //.attr("y", 6)
+            .append("text")
+     
+            // create the bars
+          g.selectAll(".bar")
+            .data(instituteResearchers)
+            .enter()
+            .append("rect")
+            .attr("fill", function(d) {
+              return color(d.person_gender_index);
+            })
+            .attr("x", function(d) {
+              return 0;
+            })
+            .attr("y", function(d) {
+              return y(d.name);
+            })
+            .attr("width", function(d) {
+              return x(Number(d.project_count));
+            })
+            .attr("height", y.bandwidth())
+            .append("svg:title") // TITLE APPENDED HERE
+            .text(function(person) {
+              return person.name + "\n" + (Math.round(person.person_gender_index * 100) / 100);
+            });;
+
+
+
+
+/*
           var x = d3.scaleBand() // scaleband for barcharts
             .rangeRound([0, width])
             .padding(0.1)
             .domain(instituteResearchers.map(function(d) {
-              return d.person_id;
+
+            	//console.log(d);
+              return d.name;
+
             }));
 
           var y = d3.scaleLinear()
@@ -353,11 +427,11 @@
             .data(instituteResearchers)
             .enter().append("rect")
             .attr("fill", function(d) {
-              console.log(d);
+              //console.log(d);
               return color(d.person_gender_index);
             })
             .attr("x", function(d) {
-              return x(d.person_id);
+              return x(d.name);
             })
             .attr("y", function(d) {
               return y(Number(d.project_count));
@@ -370,6 +444,8 @@
             .text(function(person) {
               return person.name + "\n" + (Math.round(person.person_gender_index * 100) / 100);
             });;
+
+            */
         }
 
         var institute = map.append('g');
@@ -450,7 +526,6 @@
     scroll('prof_gender_data', '50%', showProfGenderValidation, showOverallGenderData);
     scroll('project_gender_index', '50%', showProjectGenderIndex, showProfGenderValidation);
     scroll('map', '50%', showMap, showProjectGenderIndex);
-
 
     //new scroll('div4', '75%', divide, grid);
     //new scroll('div6', '75%', barChart, divide);
