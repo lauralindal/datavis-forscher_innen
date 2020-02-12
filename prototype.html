@@ -199,13 +199,9 @@
 
     <div id="project_gender_index" class="scrollable-1 scroll-info-text">
       <p>Looking at each funded project with more than one person, we can now calculate the gender ratio per project.</p>
-      <p>Thus, the project gender index indicates the gender ratio in a project, where 0 means there are only men and 1 means there are only women. In detail, there are 10488 all-male projects and 667 all-female projects.</p>
+      <p>Thus, the project gender index indicates the gender ratio in a project, where 0 means there are only men and 1 means there are only women.</p>
+      <p>In detail, 10488 (67%) collaborative projects funded by the DFG involve only men, whereas 667 (4%) involve only women.</p>
       <p><strong>This histogram shows the distribution of the project gender index.</strong></p>
-    </div>
-
-    <div class="scrollable-1 scroll-info-text">
-      <p>What does this mean?</p>
-      <p>67% of collaborative projects funded by the DFG involve only men, whereas 4% involve only women. Collaboration is better / worse than the overll ratio of funded researchers.</p>
     </div>
 
     <div id="map" class="scrollable-1 scroll-info-text">
@@ -360,7 +356,7 @@
           // sort by project count
           instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count))).reverse();
 
-          // 
+          //
           console.log(instituteResearchers);
 
           // create barchart
@@ -407,7 +403,7 @@
             	d3.axisBottom(x)
             	)
             .attr("transform", "translate(0," + (height + 6) + ")");
-           
+
                     // create the y axis
           g.append("g")
             .call(
@@ -415,7 +411,7 @@
             	).attr("stroke-width",0)
             //.attr("y", 6)
             .append("text")
-     
+
             // create the bars
           g.selectAll(".bar")
             .data(instituteResearchers)
