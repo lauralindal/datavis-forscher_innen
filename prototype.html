@@ -163,6 +163,15 @@
     blockquote {
       font-style: italic;
     }
+
+    .institute-labels {
+    	font-size: 12px;
+    }
+
+    .institute-labels:hover {
+    	cursor:pointer;
+    	font-weight: bold;
+    }
   </style>
 
 </head>
@@ -316,8 +325,9 @@
     };
 		
 		var map;
-		       // map zoom handling
-        var zoom = d3.zoom();
+	  var zoom = d3.zoom();
+	  var deutschland;
+	  var institute;
     var showMap = function() {
 
       // clear chart
@@ -333,7 +343,7 @@
           .attr('class', 'map')
           .style('background-color', backgroundColor);
 
-        var deutschland = map.append('g');
+        deutschland = map.append('g');
 
         var projection = d3.geoAlbers()
           .scale(4000)
@@ -477,7 +487,7 @@
 				    .text("Project Count");
         }
 
-        var institute = map.append('g');
+        institute = map.append('g');
         institute.selectAll('circle')
         	.attr("class","institute")
           .data(institute_data.features.filter(function(d) {
@@ -510,7 +520,7 @@
             [0, 0],
             [dim.width, dim.height]
           ])
-          .scaleExtent([0.5, 50])
+          .scaleExtent([1, 50])
           .on("zoom", zoomed));
 
         function zoomed() {
@@ -529,9 +539,20 @@
       });
     };
 
+    function resetZoom(){
+    	    deutschland.attr("transform", d3.zoomIdentity);
+          institute.attr("transform", d3.zoomIdentity);
+
+
+          institute.selectAll('circle')
+            .attr('r', function(d, i) {
+              return radius(d.properties.total_projects_count);
+            })
+    }
+
     var showSorted = function() {
     	$('.schland').fadeOut();
-
+			resetZoom();
     	
     	var institute = institute_data.features.filter(function(d) {
             return d.properties.total_projects_count > 5;
@@ -543,20 +564,21 @@
     	console.log(topUnis)
 
     	var y = d3.scaleBand()
-        .rangeRound([0,dim.height])
+        .rangeRound([0,dim.height-50])
         .domain(topUnis.map(function(d) {
           return d.properties.name;
         }))
-        .paddingInner(0.3);
+        .paddingInner(0.5);
 
-        console.log(dim.height)
-        console.log(y("Universität Mannheim"))
 
-     
+     	map.style('background-color','#fff');
 
-    	d3.selectAll('.institute-circle')
+
+     	map.selectAll('g').call(zoom.transform, d3.zoomIdentity);
+
+    	var circles = d3.selectAll('.institute-circle')
     	.transition()
-    	.duration(1200)
+    	.duration(2000)
     	.attr("cx",function(d,i){
     				//console.log(d);
             //return 1;
@@ -565,20 +587,39 @@
     					return 30;//y(d.properties.name);
     				}
             else {
-            	return -100;
+            	return -999;
             }
 
-      }).attr("cy",function(d,i){
+      })
+      	.attr("cy",function(d,i){
     				//console.log(d);
 
     				if(topUnis.some(e => d.properties.name == e.properties.name)) {
-    					return y(d.properties.name);
+    					return y(d.properties.name)+25;
     				}
             else { return 100
             }
 
       });
 
+      	  var t = map.append('g');
+        	t.selectAll('g')
+          .data(topUnis)
+          .enter()
+          .append('text')
+          .attr("class","institute-labels")
+					.transition()
+    			.duration(0)
+    			.delay(1500)
+          .attr('x', function(d, i) {
+            return 50;
+          })
+          .attr('y', function(d, i) {
+            return y(d.properties.name)+30;
+          })
+          .text(function(d, i) {
+            return d.properties.name;
+          })
       
     };
 
