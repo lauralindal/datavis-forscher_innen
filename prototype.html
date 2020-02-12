@@ -95,7 +95,7 @@
     .person-name {
       display: block;
       margin: 0;
-      font-size: 20px;
+      font-size: 17px;
       margin-bottom: 15px;
     }
 
@@ -104,7 +104,7 @@
     	position: absolute;
     	background-color: #fff;
     	z-index: 9999;
-    	font-size: 16px;
+    	font-size: 14px;
     	padding: 10px;
     	text-transform: capitalize;
     	      box-shadow: 0px 0px 5px #666;
@@ -151,6 +151,13 @@
 
     .tick {
     	text-transform: capitalize;
+    	font-size: 12px;
+    }
+
+    .xlabel {
+    	font-size: 12px;
+    	font-weight: normal;
+    	color:#666;
     }
 
     blockquote {
@@ -211,6 +218,14 @@
             	<div class="tooltip"></div>
 
     </div>
+
+    <div id="sort_values" class="scrollable-1 scroll-info-text">
+      <p>The top 30 Institutions are deep blue...</p>
+      <div class="info">
+      </div>
+            	<div class="tooltip"></div>
+
+    </div>
   </div>
 
   <script>
@@ -240,6 +255,10 @@
     var personData = d3.csv("data/reduced_data_person.csv").then(function(data) {
       personData = data;
     });
+
+    institute_data.features = institute_data.features.filter(function(d) {
+            return d.geometry.coordinates[0];
+    })
 
     // get the dynamic dims of chart
     var dim = d3.select('.chart').node().getBoundingClientRect();
@@ -295,7 +314,10 @@
         $('.chart').fadeIn(100)
       });
     };
-
+		
+		var map;
+		       // map zoom handling
+        var zoom = d3.zoom();
     var showMap = function() {
 
       // clear chart
@@ -304,7 +326,7 @@
         // clear chart
         d3.select('.chart').selectAll("*").remove();
 
-        var map = d3.select('.chart')
+        map = d3.select('.chart')
           .append('svg')
           .attr('width', width)
           .attr('height', height)
@@ -314,7 +336,7 @@
         var deutschland = map.append('g');
 
         var projection = d3.geoAlbers()
-          .scale(5000)
+          .scale(4000)
           .center([11.0, 50.8])
           .rotate([0, 0])
           .translate([width / 2, height / 2]);
@@ -327,6 +349,8 @@
           .data(schland.features)
           .enter()
           .append('path')
+                  	.attr("class","schland")
+
           .attr('fill', '#888')
           .attr('stroke', '#000')
           .attr('d', geoPath);
@@ -335,16 +359,16 @@
         function clickMapCircle(institut) {
 
           // clear old data
-          d3.select('.info').style('display', 'block').selectAll("*").remove();
+          var info = d3.selectAll('.info');
+          info.style('display', 'block').selectAll("*").remove();
           console.log(institut.properties.name + ":" + institut.properties.institution_gender_index);
 
-					d3.select('.info').append('div')
+					info.append('div')
           	.attr('class', 'institute-gi')
           	.style('background-color', color(institut.properties.institution_gender_index))
           	.text(round2dezimals(institut.properties.institution_gender_index))
           	;
-          d3.select('.info')
-          	.append('div')
+          info.append('div')
           	.attr('class', 'institute-name')
           	.text(institut.properties.name);
           
@@ -360,18 +384,18 @@
           console.log(instituteResearchers);
 
           // create barchart
-          var svg = d3.select('.info')
+          var svg = info
             .style('background-color', backgroundColor)
             .append('svg')
-            .attr('width', 500)
+            .attr('width', dim.width)
             .attr('height', (instituteResearchers.length+1)*38);
 
           // margins for the rectangles
           var margin = {
               top: 20,
               right: 20,
-              bottom: 30,
-              left: 200
+              bottom: 60,
+              left: 280
             },
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom,
@@ -443,17 +467,19 @@
 
             	$(".tooltip").hide()
             	
-            })
-            .append("svg:title") // TITLE APPENDED HERE
-            .text(function(person) {
-              return person.name + "\n" + round2dezimals(person.person_gender_index);
-            })
+            });
 
-           ;
+           svg.append("text")
+				    .attr("class", "xlabel")
+				    .attr("text-anchor", "end")
+				    .attr("x", width + margin.left)
+				    .attr("y", height + margin.top)
+				    .text("Project Count");
         }
 
         var institute = map.append('g');
         institute.selectAll('circle')
+        	.attr("class","institute")
           .data(institute_data.features.filter(function(d) {
             return d.properties.total_projects_count > 5;
           }))
@@ -479,16 +505,12 @@
             return institut.properties.name + "\n" + (Math.round(institut.properties.institution_gender_index * 100) / 100);
           });
 
-
-        // map zoom handling
-        var zoom = d3.zoom();
-
         map.call(d3.zoom()
           .extent([
             [0, 0],
-            [width, height]
+            [dim.width, dim.height]
           ])
-          .scaleExtent([1, 50])
+          .scaleExtent([0.5, 50])
           .on("zoom", zoomed));
 
         function zoomed() {
@@ -505,6 +527,59 @@
 
         $('.chart').fadeIn(100)
       });
+    };
+
+    var showSorted = function() {
+    	$('.schland').fadeOut();
+
+    	
+    	var institute = institute_data.features.filter(function(d) {
+            return d.properties.total_projects_count > 5;
+          })
+
+    	institute.sort((a, b) => d3.descending(Number(a.properties.total_projects_count), Number(b.properties.total_projects_count)));
+
+    	var topUnis = institute.slice(0,40)
+    	console.log(topUnis)
+
+    	var y = d3.scaleBand()
+        .rangeRound([0,dim.height])
+        .domain(topUnis.map(function(d) {
+          return d.properties.name;
+        }))
+        .paddingInner(0.3);
+
+        console.log(dim.height)
+        console.log(y("Universität Mannheim"))
+
+     
+
+    	d3.selectAll('.institute-circle')
+    	.transition()
+    	.duration(1200)
+    	.attr("cx",function(d,i){
+    				//console.log(d);
+            //return 1;
+
+            if(topUnis.some(e => d.properties.name == e.properties.name)) {
+    					return 30;//y(d.properties.name);
+    				}
+            else {
+            	return -100;
+            }
+
+      }).attr("cy",function(d,i){
+    				//console.log(d);
+
+    				if(topUnis.some(e => d.properties.name == e.properties.name)) {
+    					return y(d.properties.name);
+    				}
+            else { return 100
+            }
+
+      });
+
+      
     };
 
     // scroll handling
@@ -526,10 +601,11 @@
     //scroll('preinfo', '50%', showWelcome, showOverallGenderData);
     //scroll('overall_gender_data', '50%', function(){console.log("test1")}, function(){console.log("test2")});
 
-    scroll('overall_gender_data', '50%', showOverallGenderData, showWelcome);
-    scroll('prof_gender_data', '50%', showProfGenderValidation, showOverallGenderData);
-    scroll('project_gender_index', '50%', showProjectGenderIndex, showProfGenderValidation);
-    scroll('map', '50%', showMap, showProjectGenderIndex);
+    scroll('overall_gender_data', '75%', showOverallGenderData, showWelcome);
+    scroll('prof_gender_data', '75%', showProfGenderValidation, showOverallGenderData);
+    scroll('project_gender_index', '75%', showProjectGenderIndex, showProfGenderValidation);
+    scroll('map', '75%', showMap, showProjectGenderIndex);
+    scroll('sort_values', '75%', showSorted, showMap);
 
     //new scroll('div4', '75%', divide, grid);
     //new scroll('div6', '75%', barChart, divide);

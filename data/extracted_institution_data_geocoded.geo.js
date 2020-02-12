@@ -29076,32 +29076,6 @@
        "coordinates":  { }
     },
     "properties": {
-    "FIELD1":1118,
-    "Unnamed: 0":1118,
-    "institution_id":25125338,
-    "institution_gender_index":0.19791666666666666,
-    "name":"University of Minnesota",
-    "address":"231 Pillsbury Drive S.E.\nMinneapolis MN 55455-0213\nUSA",
-    "phone":"+1 612 625-2008",
-    "fax":"+1 612 626-1693",
-    "email":"",
-    "internet":"Zur Homepage",
-    "streat":"",
-    "city":"",
-    "county":"",
-    "state":"",
-    "plz":null,
-    "total_projects_count":17,
-    "total_projects_count_2":17
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  { }
-    },
-    "properties": {
     "FIELD1":1119,
     "Unnamed: 0":1119,
     "institution_id":25350393,
@@ -54443,32 +54417,6 @@
     "plz":null,
     "total_projects_count":1,
     "total_projects_count_2":1
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  { }
-    },
-    "properties": {
-    "FIELD1":2094,
-    "Unnamed: 0":2094,
-    "institution_id":394226102,
-    "institution_gender_index":0.19791666666666666,
-    "name":"University of Minnesota",
-    "address":"East River Road 56\nMN 55455 Minneapolis\nUSA",
-    "phone":"",
-    "fax":"",
-    "email":"",
-    "internet":"Zur Homepage",
-    "streat":"",
-    "city":"",
-    "county":"",
-    "state":"",
-    "plz":null,
-    "total_projects_count":17,
-    "total_projects_count_2":17
     }
   },
   {
