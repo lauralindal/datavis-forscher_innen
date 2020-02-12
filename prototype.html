@@ -297,13 +297,126 @@
 
     var showOverallGenderData = function() {
       // clear chart
+      
       $('.chart').fadeOut(100, function() {
         d3.select('.chart').selectAll("*").remove();
+
+        /*
         d3.select('.chart')
           .append('div')
           .attr('class', 'overall_gender_data');
-        $('.chart').fadeIn(100)
+*/
+
+    		var profGenderData = d3.csv("data/gender_ratio_in_dataset.csv").then(function(data) {
+      		
+    			console.log(data)
+
+					// create barchart
+          var svg = d3.select('.chart')
+            .append('svg')
+            .attr('width', dim.width)
+            .attr('height', 500);
+
+          // margins for the rectangles
+          var margin = {
+              top: 20,
+              right: 20,
+              bottom: 50,
+              left: 50
+            },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom,
+            g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+						
+            var x = d3.scaleBand()
+            .rangeRound([0, width])
+            .domain(data.map(function(d) {
+              return d.gender;
+            }))
+            .paddingOuter(0.3)
+            .paddingInner(0.3);
+
+            var y = d3.scaleLinear()
+            .rangeRound([height, 0])
+            .domain([0, d3.max(data, function(d) {
+              return Number(d.count);
+            })])
+
+
+
+					// create the x axis
+          g.append("g")
+            .call(
+            	d3.axisBottom(x)
+            	)
+            .attr("transform", "translate(0," + (height + 6) + ")");
+
+         // create the y axis
+          g.append("g")
+            .call(
+            	d3.axisLeft(y).tickSize(6)
+            	)
+            //.attr("y", 6)
+            .append("text")
+
+            // create the bars
+          g.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+
+            .attr("fill", function(d) {
+            	if(d.gender == "male"){
+            		return color(0);
+            	} else if (d.gender == "female") {
+            		return color(1);
+            	} else if (d.gender == "unclear") {
+            		return "#333";
+            	} else {
+            		return "#aaa";
+            	}
+            })
+            .attr("x", function(d) {
+              return x(d.gender);
+            })
+            .attr("y", function(d) {
+            	console.log(d)
+              return height;//y(Number(d.count));
+            })
+            .attr("width", function(d) {
+              return x.bandwidth();
+            }).style("cursor", "pointer")
+            .append("svg:title") // TITLE APPENDED HERE
+          	.text(function(d) {
+            return d.count;
+          });
+
+						g.selectAll("rect")
+            .transition()
+             .transition().delay(function (d,i){ return i * 500;})
+ 						.duration(500)
+            .attr("height", function(d) {
+              return height-y(d.count)//height-y(Number(d.count));
+            })
+            .attr("y", function(d) { return y(d.count); });
+/*
+           svg.append("text")
+				    .attr("class", "xlabel")
+				    .attr("text-anchor", "end")
+				    .attr("x", width + margin.left)
+				    .attr("y", height + margin.top)
+				    .text("Project Count");
+
+
+*/
+
+ 
+
+        $('.chart').fadeIn(100);
       });
+    });
     };
 
     var showProfGenderValidation = function() {
