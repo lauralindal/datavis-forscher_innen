@@ -135,6 +135,15 @@
       height: 100%;
     }
 
+    .prof_gender_data_legend {
+      background-image: url('img/prof_gender_data_legend.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+    }
+
     .project_gender_index {
       background-image: url('img/project_gender_index_hist.png');
       background-repeat: no-repeat;
@@ -175,6 +184,11 @@
 
     .info2 {
     	display: none;
+    }
+
+    .barchart-label {
+    	font-size: 14px;
+    	fill: #999;
     }
   </style>
 
@@ -309,7 +323,7 @@
 
     		var profGenderData = d3.csv("data/gender_ratio_in_dataset.csv").then(function(data) {
       		
-    			console.log(data)
+    			//console.log(data)
 
 					// create barchart
           var svg = d3.select('.chart')
@@ -322,7 +336,7 @@
               top: 20,
               right: 20,
               bottom: 50,
-              left: 50
+              left: 100
             },
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom,
@@ -382,7 +396,7 @@
               return x(d.gender);
             })
             .attr("y", function(d) {
-            	console.log(d)
+            	//console.log(d)
               return height;//y(Number(d.count));
             })
             .attr("width", function(d) {
@@ -411,7 +425,21 @@
 
 
 */
+svg.append("text")
+		.attr("class","barchart-label")
+		.attr("transform", "rotate(-90)")
+		.attr("text-anchor", "end")
+    .attr("y", 30)
+    .attr("x", -150)
+    //.attr("dy", -20)
+    .text("Researcher Count");
 
+    svg.append("text")
+		.attr("class","barchart-label")
+		.attr("text-anchor", "end")
+		.attr("x", width - 200)
+    .attr("y", height + margin.bottom + margin.top)
+    .text("Gender");
  
 
         $('.chart').fadeIn(100);
@@ -420,6 +448,169 @@
     };
 
     var showProfGenderValidation = function() {
+
+
+    	 $('.chart').fadeOut(100, function() {
+        d3.select('.chart').selectAll("*").remove();
+
+    		var profGenderData = d3.csv("data/prof_gender_data.csv",function(d) {
+   						return {
+			       correct: +d.correct, mismatch: +d.mismatch, unassigned: +d.unassigned, unclear: +d.unclear, gender: d.gender_title
+			   }}).then(function(data) {
+      		
+    			//console.log(data)
+
+    			//convert the data for barchart
+    			total1 = data[0].correct + data[0].mismatch + data[0].unassigned + data[0].unclear;
+    			total2 = data[1].correct + data[1].mismatch + data[1].unassigned + data[1].unclear;
+
+
+    			data[0].correctP= data[0].correct/total1
+    			data[0].mismatchP = data[0].mismatch/total1
+    			data[0].unassignedP = data[0].unassigned/total1
+    			data[0].unclearP = data[0].unclear/total1
+
+    			data[1].correctP = data[1].correct/total2
+    			data[1].mismatchP = data[1].mismatch/total2
+    			data[1].unassignedP = data[1].unassigned/total2
+    			data[1].unclearP = data[1].unclear/total2
+
+    			var bars = []
+    			bars.push({gender: data[0].gender, type: "correct", count: data[0].correct, percent: data[0].correctP});
+    			bars.push({gender: data[0].gender, type: "mismatch", count: data[0].mismatch, percent: data[0].mismatchP});
+    			bars.push({gender: data[0].gender, type: "unassigned", count: data[0].unassigned, percent: data[0].unassignedP});
+    			bars.push({gender: data[0].gender, type: "unclear", count: data[0].unclear, percent: data[0].unclearP});
+
+    			bars.push({gender: data[1].gender, type: "correct", count: data[1].correct, percent: data[1].correctP});
+    			bars.push({gender: data[1].gender, type: "mismatch", count: data[1].mismatch, percent: data[1].mismatchP});
+    			bars.push({gender: data[1].gender, type: "unassigned", count: data[1].unassigned, percent: data[1].unassignedP});
+    			bars.push({gender: data[1].gender, type: "unclear", count: data[1].unclear, percent: data[1].unclearP});
+
+    			console.log(bars)
+
+					// create barchart
+          var svg = d3.select('.chart')
+            .append('svg')
+            .attr('width', dim.width)
+            .attr('height', 500);
+
+          // margins for the rectangles
+          var margin = {
+              top: 20,
+              right: 20,
+              bottom: 50,
+              left: 100
+            },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom,
+            g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var x = d3.scaleBand()
+            .rangeRound([0, width])
+            .domain(["Male","Female"])
+            .paddingOuter(0.3)
+            .paddingInner(0.3);
+
+            var y = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, 1])
+
+					// create the x axis
+          g.append("g")
+            .call(
+            	d3.axisBottom(x)
+            	)
+            .attr("transform", "translate(0," + (height + 6) + ")");
+
+         // create the y axis
+          g.append("g")
+            .call(
+            	d3.axisLeft(y).tickSize(6)
+            	)
+            //.attr("y", 6)
+
+          var stack = 0;
+
+            // create the bars
+          g.selectAll(".bar")
+            .data(bars)
+            .enter()
+            .append("rect")
+
+            .attr("fill", function(d) {
+            	if(d.gender == "prof_male" & d.type == "correct"){
+            		return "#579d1c"; // color(0); // #579d1c
+            	} else if (d.gender == "prof_female" & d.type == "correct") {
+            		return "#579d1c";//color(1); // #579d1c
+            	} else if (d.type == "unclear") {
+            		return "#ffd320"; //"#777"; // #ffd320
+            	} else if (d.type == "unassigned"){
+            		return "#004586";//"#ccc"; //  #004586
+            	} else if (d.type == "mismatch"){
+            		return "#ff420e";//"#000"; // #ff420e
+            	}
+            })
+            .attr("x", function(d) {
+            	if(d.gender == "prof_male") return x("Male")
+            		else
+              return x("Female");
+            })
+            .attr("y", function(d,i) {
+            	console.log(i%4 + ": " + stack + " " + d.type)
+            	stack = stack + d.percent;
+            	if((i+1) % 4 == 0) stack = 0;
+              return y(stack) - 6;//y(Number(d.count));
+            }).attr("height", function(d) {
+              return height-y(d.percent)//height-y(Number(d.count));
+            })
+            .attr("width", function(d) {
+              return x.bandwidth();
+            }).style("cursor", "pointer")
+            .append("svg:title") // TITLE APPENDED HERE
+          	.text(function(d) {
+            return d.type + "\n" + round2dezimals(d.percent) + "\n" + d.count ;
+          })          	
+            
+/*
+           svg.append("text")
+				    .attr("class", "xlabel")
+				    .attr("text-anchor", "end")
+				    .attr("x", width + margin.left)
+				    .attr("y", height + margin.top)
+				    .text("Project Count");
+
+
+*/
+				svg.append("text")
+						.attr("class","barchart-label")
+						.attr("transform", "rotate(-90)")
+						.attr("text-anchor", "end")
+				    .attr("y", 30)
+				    .attr("x", -150)
+				    //.attr("dy", -20)
+				    .text("Percent");
+
+				    svg.append("text")
+						.attr("class","barchart-label")
+						.attr("text-anchor", "end")
+						.attr("x", width - 200)
+				    .attr("y", height + margin.bottom + margin.top)
+				    .text("Professor Gender");
+				 
+				// d3 legend ;)
+				d3.select('.chart')
+				.append('div')
+				.attr('class', 'prof_gender_data_legend');
+
+
+        $('.chart').fadeIn(100);
+      });
+    });
+
+
+
+
+    	      /*
       // clear chart
       $('.chart').fadeOut(100, function() {
         d3.select('.chart').selectAll("*").remove();
@@ -428,6 +619,7 @@
           .attr('class', 'prof_gender_data');
         $('.chart').fadeIn(100)
       });
+      */
     };
 
     var showProjectGenderIndex = function() {
