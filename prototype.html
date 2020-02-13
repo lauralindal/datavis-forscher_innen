@@ -206,7 +206,7 @@
   </div>
 
   <div class="text">
-  	<div id="preinfo" class="pre-info scroll-info-text">
+  	<!-- <div id="preinfo" class="pre-info scroll-info-text">
       <div class="">
         <p>
           <blockquote>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a
@@ -217,7 +217,7 @@
         <p><strong>How diverse are German research projects regarding the gender ratio of their teams?</strong></p>
         <p><strong>How gender diverse are individual researchers' collaborations?</strong></p>
       </div>
-    </div>
+    </div> -->
 
     <div id="preinfo" class="pre-info scroll-info-text">
       <div class="">
@@ -326,7 +326,7 @@
 
     var showOverallGenderData = function() {
       // clear chart
-      
+
       $('.chart').fadeOut(100, function() {
         d3.select('.chart').selectAll("*").remove();
 
@@ -337,7 +337,7 @@
 */
 
     		var profGenderData = d3.csv("data/gender_ratio_in_dataset.csv").then(function(data) {
-      		
+
     			//console.log(data)
 
 					// create barchart
@@ -358,7 +358,7 @@
             g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-						
+
             var x = d3.scaleBand()
             .rangeRound([0, width])
             .domain(data.map(function(d) {
@@ -455,7 +455,7 @@ svg.append("text")
 		.attr("x", width - 200)
     .attr("y", height + margin.bottom + margin.top)
     .text("Gender");
- 
+
 
         $('.chart').fadeIn(100);
       });
@@ -472,7 +472,7 @@ svg.append("text")
    						return {
 			       correct: +d.correct, mismatch: +d.mismatch, unassigned: +d.unassigned, unclear: +d.unclear, gender: d.gender_title
 			   }}).then(function(data) {
-      		
+
     			//console.log(data)
 
     			//convert the data for barchart
@@ -584,8 +584,8 @@ svg.append("text")
             .append("svg:title") // TITLE APPENDED HERE
           	.text(function(d) {
             return d.type + "\n" + round2dezimals(d.percent) + "\n" + d.count ;
-          })          	
-            
+          })
+
 /*
            svg.append("text")
 				    .attr("class", "xlabel")
@@ -611,7 +611,7 @@ svg.append("text")
 						.attr("x", width - 200)
 				    .attr("y", height + margin.bottom + margin.top)
 				    .text("Professor Gender");
-				 
+
 				// d3 legend ;)
 				d3.select('.chart')
 				.append('div')
@@ -647,7 +647,7 @@ svg.append("text")
         $('.chart').fadeIn(100)
       });
     };
-		
+
 		var map;
 	  var zoom = d3.zoom();
 	  var deutschland;
@@ -690,7 +690,7 @@ svg.append("text")
           .attr('d', geoPath);
 
         // show barchart of institute, top10 researchers
-        
+
 
         institute = map.append('g');
         institute.selectAll('circle')
@@ -761,7 +761,7 @@ svg.append("text")
           info.append('div')
           	.attr('class', 'institute-name')
           	.text(institut.properties.name);
-          
+
           // get researchers from this institute, and only get those with gender index defined
           var instituteResearchers = topResearchers.filter(function(d) {
             return d.institution_id == institut.properties.institution_id && d.person_gender_index != "";
@@ -851,12 +851,12 @@ svg.append("text")
             	$(".tooltip").show()
             	.html('<div><div class="institute-gi" style="background-color: '+color(d.person_gender_index)+'">' + round2dezimals(d.person_gender_index) + '</div><div class="person-name">'+d.name+'</div></div><div style="claer:both"><b>Project Count:</b> ' + d.project_count + '<br><b>Gender:</b> ' + gender + '</di>')
             	.css({ 'top': currentMousePos.y+'px', 'left': currentMousePos.x+'px'});
-            	
-                     	
+
+
             }).on('mouseout',function(d){
 
             	$(".tooltip").hide()
-            	
+
             });
 
            svg.append("text")
@@ -883,7 +883,7 @@ svg.append("text")
     	$('.info').fadeOut();
     	$('.schland').fadeOut();
 			resetZoom();
-    	
+
     	var institute = institute_data.features.filter(function(d) {
             return d.properties.total_projects_count > 5;
           })
@@ -952,7 +952,7 @@ svg.append("text")
           })
 
 
-      
+
     };
 
     // scroll handling
