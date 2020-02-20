@@ -1,0 +1,179 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Trebuchet MS, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: #666;
+}
+
+.fixed-header {
+  width: 50vw;
+  padding: 20px;
+  margin: 0px auto;
+  position: fixed;
+  font-style: bold;
+  font-size: 20px;
+}
+
+.map {
+  box-shadow: 0px 0px 5px #ccc;
+}
+
+.institute-circle {
+  /*opacity: 0.5;*/
+}
+
+.institute-circle:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.institute-name {
+  display: block;
+  margin: 0;
+  font-size: 20px;
+  line-height: 2.4;
+}
+
+.institute-gi {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 13px;
+	color:
+	#fff;
+	font-weight: bold;
+	float: left;
+
+	margin-right: 10px;
+	font-size: 20px;
+}
+
+.chart {
+  position: fixed;
+  height: 100vh;
+  width: 45vw;
+  padding: 20px;
+  margin-top: 140px;
+}
+
+.text {
+  margin-top: 100px;
+  float: right;
+  width: 50vw;
+  padding: 20px;
+}
+
+.info {
+  box-shadow: 0px 0px 5px #ccc;
+  margin-top: 30px;
+  background-color: #fff;
+  z-index: 1000;
+  display: none;
+  padding: 10px 20px;
+}
+
+.person-name {
+  display: block;
+  margin: 0;
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+.tooltip {
+	display: none;
+	position: absolute;
+	background-color: #fff;
+	z-index: 9999;
+	font-size: 14px;
+	padding: 10px;
+	text-transform: capitalize;
+	      box-shadow: 0px 0px 5px #666;
+
+}
+
+.welcome-pic {
+  background-image: url('img/welcome.jpeg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.overall_gender_data {
+  background-image: url('img/gender_ratio_in_dataset.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.prof_gender_data {
+  background-image: url('img/prof_gender_data.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.prof_gender_data_legend {
+  background-image: url('img/prof_gender_data_legend.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+}
+
+.project_gender_index {
+  background-image: url('img/project_gender_index_hist.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  max-width: 500px;
+  margin-left: 150px;
+  height: 100%;
+}
+
+.scroll-info-text {
+  font-size: 25px;
+
+  height: 100vh;
+}
+
+.tick {
+	text-transform: capitalize;
+	font-size: 12px;
+}
+
+.xlabel {
+	font-size: 12px;
+	font-weight: normal;
+	color:#666;
+}
+
+blockquote {
+  font-style: italic;
+}
+
+.institute-labels {
+	font-size: 12px;
+}
+
+.institute-labels:hover {
+	cursor:pointer;
+	font-weight: bold;
+}
+
+.info2 {
+	display: none;
+}
+
+.barchart-label {
+	font-size: 14px;
+	fill: #999;
+}
