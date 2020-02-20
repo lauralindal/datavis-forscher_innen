@@ -34,9 +34,9 @@ We're giving you the opportunity to explore different universities' degrees of g
 
 [Worldwide Gender-Name Dictionary](https://ideas.repec.org/c/wip/eccode/10.html)
 
-Geodata from TODO
+[Geodata from Open Streetmap](https://www.openstreetmap.org/copyright)
 
-External libraries in addition to d3.js TODO
+External libraries in addition to d3.js: [jQuery](https://jquery.com/), [Waypoints.js](http://imakewebthings.com/waypoints/)
 
 ##  <a name="design"></a> Design Decisions based on “Four Nested Levels of Visualization Design” by Munzner
 
@@ -62,7 +62,7 @@ We decided to use a *map* to display the institutions in an *overview* and *bar 
 Finally, we display a *ranking* of the top 30 institutions by their project count to illustrate how the most actively supported institutions are doing regarding their gender index. We're keeping the meaning of *dot size* and *dot color* from out previous visualization, thus providing linked highlighting.
 
 ### <a name="algorithm"></a>Algorithm design
-The dataset was already small due to the data preprocessing that we needed to create the gender index. However, we also decided to display only institutions that have more than five projects (TODO stimmt das noch?) related to them. Thus, we could ensure a quick visualization with focus on those institutions that matter on a larger scale of this context.
+The dataset was already small due to the data preprocessing that we needed to create the gender index. However, we also decided to display only institutions that have more than five projects (TODO stimmt das noch? ja) related to them. Thus, we could ensure a quick visualization with focus on those institutions that matter on a larger scale of this context.
 
 ## <a name="validation"></a> Validation
 We validated the design with one person who is doing their PhD in sociology and gender studies, and is thus very interested in this visualization. According to Munzner, possible threats are: addressing the wrong problem, bad data / operation abstraction, ineffective encoding / interaction technique, slow algorithm. We focused on the first three threats.
@@ -73,10 +73,13 @@ The scrollytelling part of the visualization was appreciated by the user, as the
 (Validate your design and document lessons learned: Conduct an informal validation with at least one person who has not seen the visualization before. Let the person use the visualization and comment on it (“think aloud”; https://en.wikipedia.org/wiki/Think_aloud_protocol). Try to address the threats mentioned in the Munzner 2009 paper for the first three categories (domain, data/task, and visual encoding / interaction) and summarize the person’s answers. What did you learn from the validation for possible improvements of your visualization?)
 
 ## <a name="installation"></a> Installation
-(How can I install the visualization project (step-by-step manual)?
+1. Clone this Repo
+2. run prototype.html via http
+
+*A hosted version is available [here](http://m16.feste-ip.net/datavis-forscher_innen/prototype.html)*
 
 ## <a name="manual"></a> Manual
-(A brief manual about how to use the software. For this it makes sense to use screencasts or screenshots.)
+[Video: screencast.mp4](screencast.mp4)
 
 ## <a name="contributors"></a> Contributors
 Johannes P. and Laura L.
