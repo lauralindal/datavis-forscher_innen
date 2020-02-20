@@ -337,6 +337,7 @@ $(document).ready(function() {
     var zoom = d3.zoom();
     var deutschland;
     var institute;
+    var instituteNamen;
     var showMap = function() {
 
         // clear chart
@@ -402,6 +403,7 @@ $(document).ready(function() {
                 .text(function(institut) {
                     return institut.properties.name + "\n" + (Math.round(institut.properties.institution_gender_index * 100) / 100);
                 });
+            instituteNamen = map.append("g");
 
             // zoom handling
             map.call(d3.zoom()
@@ -415,6 +417,7 @@ $(document).ready(function() {
             function zoomed() {
                 deutschland.attr("transform", d3.event.transform);
                 institute.attr("transform", d3.event.transform);
+                instituteNamen.attr("transform", d3.event.transform);
 
                 var scaleFactor = d3.event.transform.k;
 
@@ -548,7 +551,7 @@ $(document).ready(function() {
     function resetZoom() {
         deutschland.attr("transform", d3.zoomIdentity);
         institute.attr("transform", d3.zoomIdentity);
-
+        instituteNamen.attr("transform", d3.zoomIdentity);
 
         institute.selectAll('circle')
             .attr('r', function(d, i) {
@@ -578,10 +581,9 @@ $(document).ready(function() {
             }))
             .paddingInner(0.5);
 
-
         map.style('background-color', '#fff');
 
-
+        // resset zoom
         map.selectAll('g').call(zoom.transform, d3.zoomIdentity);
 
         var circles = d3.selectAll('.institute-circle')
@@ -609,8 +611,9 @@ $(document).ready(function() {
 
             });
 
-        var t = map.append('g');
-        t.selectAll('g')
+        //var t = map.append('g');
+        // add name labels
+        instituteNamen.selectAll('g')
             .data(topUnis)
             .enter()
             .append('text')
@@ -649,9 +652,10 @@ $(document).ready(function() {
     scroll('project_gender_index', '75%', showProjectGenderIndex, showProfGenderValidation);
     scroll('map', '75%', showMap, showProjectGenderIndex);
     scroll('sort_values', '75%', showSorted, showMap);
+
+    $(document).mousemove(function(event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
 });
 
-$(document).mousemove(function(event) {
-    currentMousePos.x = event.pageX;
-    currentMousePos.y = event.pageY;
-});

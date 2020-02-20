@@ -55,7 +55,7 @@ body {
 
 .chart {
   position: fixed;
-  height: 100vh;
+  height: 80vh;
   width: 45vw;
   padding: 20px;
   margin-top: 140px;
