@@ -691,13 +691,17 @@ $(document).ready(function() {
                 var xpos = currentMousePos.x;
                 var ypos = currentMousePos.y;
                 if(dim.width < 700) {
-                    xpos = d3.event.clientX;
-                    ypos = d3.event.clientY;
+                    var offset = $('.info1').offset();
+                    xpos = d3.event.clientX - (offset.top - $(window).scrollTop());
+                    ypos = d3.event.clientY ;//- offset.left + $(window).scrollLeft();
+
+                    console.log(offset.top);
                 }
 
                 $(".tooltip").show()
                     .html('<div><div class="institute-gi" style="background-color: ' + color(d.person_gender_index) + '">' + round2dezimals(d.person_gender_index) + '</div><div class="person-name">' + d.name + '</div></div><div style="claer:both"><b>Project Count:</b> ' + d.project_count + '<br><b>Gender:</b> ' + gender + '</di>')
                     .css({ 'top': ypos + 'px', 'left': xpos + 'px' });
+
             }).on('mouseout', function(d) {
                 if(dim.width >= 700)
                     $(".tooltip").hide()
