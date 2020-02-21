@@ -96,12 +96,28 @@ This visualization was added to complement the map, to focus on the largest inst
 The dataset was already small due to the data preprocessing that we needed to create the gender index. However, we also decided to display only institutions that have more than five projects related to them. Thus, we could ensure a quick visualization with focus on those institutions that matter on a larger scale of this context.
 
 ## <a name="validation"></a> Validation
+
 We validated the design with one person who is doing their PhD in sociology and gender studies, and is thus very interested in this visualization. According to Munzner, possible threats are: addressing the wrong problem, bad data / operation abstraction, ineffective encoding / interaction technique, slow algorithm. We focused on the first three threats.
 
-The scrollytelling part of the visualization was appreciated by the user, as the aim was clearly stated and context as well as criticism was given about the data.
+#### Addressing the wrong problem
 
+As the aim was clearly stated and context as well as criticism was given about the data, the user appreciated the scrollytelling part of the visualization. They did find our questions relevant / addressing an important question. However, they would have preferred a more critical discussion. First of all, gender is only one aspect of diversity, and the user did not see this fact reiterated to their satisfaction.
 
-(Validate your design and document lessons learned: Conduct an informal validation with at least one person who has not seen the visualization before. Let the person use the visualization and comment on it (“think aloud”; https://en.wikipedia.org/wiki/Think_aloud_protocol). Try to address the threats mentioned in the Munzner 2009 paper for the first three categories (domain, data/task, and visual encoding / interaction) and summarize the person’s answers. What did you learn from the validation for possible improvements of your visualization?)
+#### Bad data / operation abstraction
+
+The user had further questions about both GEPRIS as well as additional data: Does the GEPRIS data allow for titles beyond the gender binary (e.g. "Professor*in")? Is the mismatch between title and inferred gender due to the German "generische Maskulinum"? How well does the external data handle non-German names? The user picked one non-German researcher and looked them up online, realizing that the gender inference for their name was faulty. However, we then realized that the user confused the color coding for a gender inference instead of the coding for the gender index.
+
+The questions could be addressed in the accompanying text. We could also add a link for each professor to the dataset in order to make it easier for the user to check the identity of each researcher and the correctness of the data. Additionally, we need to improve the color coding in the bar chart to make it more clear that the color coding is related to the gender index, not the researcher's inferred gender.
+
+#### Ineffective encoding / interaction technique
+
+The user mentioned that the color encoding is very "classical" and thus intuitive, however, they wondered if a different color encoding could have been used in order to disrupt gender stereotyping.
+
+The user very much enjoyed the last transition and scrolled back and forth between the map and the final ranking several times.
+
+#### Additional Feedback
+
+Luckily, our test user tried the visualization on a small screen and in a non-fullscreen window so that some of the visualization (e.g. sticky header) were displayed sub-optimally. Adjusting for different screen sizes and mobile would be an improvement.
 
 ## <a name="installation"></a> Installation
 1. Clone this Repo
