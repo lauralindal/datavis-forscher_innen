@@ -1,7 +1,7 @@
 # Gendered collaboration amongst German researchers
 
 ## tl;dr
-A visualization of gendered collaboration among researchers funded by the DFG in order to explore gender equality within academia. To try the visualization, look [no further than right here](http://m16.feste-ip.net/datavis-forscher_innen/prototype.html).
+A visualization of gendered collaboration among researchers funded by the DFG in order to explore gender equality within academia. To try the visualization, look [no further than right here](https://lauralindal.github.io/datavis-forscher_innen/prototype.html).
 
 ## Table of Contents
 
@@ -79,7 +79,7 @@ The histogram links back to our color coding. Since the bins are double encoded 
 
 #### Map
 
-The map invites the user to *explore* the data. This statial representation facilitates searching and browsing: the user might know where the institution of interest is located, so they can quickly find them, much faster than e.g. a long alphabetical list. If they are interested in a specific institution, they may want to compare it to other institutions in that region: so the "interest" is space correlated. Lastly, a map is visually appealing and a welcome variety after displaying bar charts only, so far.
+The map invites the user to *explore* the data. This spatial representation facilitates searching and browsing: the user might know where the institution of interest is located, so they can quickly find them, much faster than e.g. a long alphabetical list. If they are interested in a specific institution, they may want to compare it to other institutions in that region: so the "interest" is space correlated. Lastly, a map is visually appealing and a welcome variety after displaying bar charts only, so far.
 
 To prevent overlapping of the circles, we do not scale the circles when zooming in. The farther the user zooms in, the less overlapping occurs.
 
@@ -93,7 +93,7 @@ This visualization was added to complement the map, to focus on the largest inst
 
 
 ### <a name="algorithm"></a>Algorithm design
-The dataset was already small due to the data preprocessing that we needed to create the gender index. However, we also decided to display only institutions that have more than five projects (TODO stimmt das noch? ja) related to them. Thus, we could ensure a quick visualization with focus on those institutions that matter on a larger scale of this context.
+The dataset was already small due to the data preprocessing that we needed to create the gender index. However, we also decided to display only institutions that have more than five projects related to them. Thus, we could ensure a quick visualization with focus on those institutions that matter on a larger scale of this context.
 
 ## <a name="validation"></a> Validation
 We validated the design with one person who is doing their PhD in sociology and gender studies, and is thus very interested in this visualization. According to Munzner, possible threats are: addressing the wrong problem, bad data / operation abstraction, ineffective encoding / interaction technique, slow algorithm. We focused on the first three threats.
