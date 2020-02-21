@@ -55,11 +55,42 @@ The tasks for this data are to discover distributions, browse the topology and i
 
 ### <a name="encoding"></a> Visual encoding / interaction design
 
-We decided to explain a bit about the data we used and how we used it first in order to allow for critical thinking. Thus, some information is displayed in scrollable interaction before we display the main visualization. Said information is about the general gender ratio in the dataset (*bar chart* for quick orientation) as well as the ratio of correctly inferred gender (*bar chart* for the same reason). Additionally, there is a *histogram* to show the distribution of our project gender index.
+We decided to explain a bit about the data we used and how we used it first in order to allow for critical thinking. Thus, some information is displayed in scrollable interaction before we display the main visualization. Said information is about the general gender ratio in the dataset (*bar chart* for quick orientation) as well as the ratio of correctly inferred gender (*bar chart* for the same reason). Additionally, there is a *histogram* to show the distribution of our project gender index. In bold text, at the end of each introductory paragraph for each visualization, we added the caption of the graph.
 
 We decided to use a *map* to display the institutions in an *overview* and *bar charts for detail*. The map helps the user to find an orientation but also to get a first impression of the general distribution of data. The *dot size* for each institution represents the amount of projects that people belonging to that institution are involved in. The *color* of each dot represents the institution_gender_index. Users can zoom into the map in order to identify individual institutions. On click, we will provide further detail about the institution. Assuming that the researchers involved in the most projects can also have the most impact on future projects and their gender ratios, we show these 10 researchers per institution with their person_gender_index, using the same color scheme as before, and the amount of projects they are involved in. This provides an option to real life interaction in which researchers could be approached about strategies they are already using or that can help them diversify their collaborations - depending on said gender index.
 
 Finally, we display a *ranking* of the top 30 institutions by their project count to illustrate how the most actively supported institutions are doing regarding their gender index. We're keeping the meaning of *dot size* and *dot color* from out previous visualization, thus providing linked highlighting.
+
+More details on our design decision will now follow.
+
+#### Bar Chart
+
+We added a transition animation to the first bar chart to capture the user's attention and to highlight the fact that this is a interactive visualization so that the user is invited to interact with the bar chart. On hover, we show the exact values for each category. With this bar chart, we also first introduce the user to the color scheme which we will stick to thereafter.
+
+Color encoding: We tried various color schemes, but settled for blue - pink because it is widely used for color encoding gender and as such users will quickly and intuitively understand the meaning. Later on, we add a gradient to the color. We picked this specific blue and pink so the differences in the gradient are very pronounced and small changes are noticeable. We are, nonetheless, critical about how this color scheme reproduces gender stereotypes.
+
+#### Stacked Barchart
+
+The stacked bar chart shows our validation of the data. The color scheme was chosen so the user quickly notices that "there is a lot of green", meaning most of the gender inference was correct. Green here representing that standard color for "good", yellow for "not so good" and red for "bad", which is very intuitive. The missing data was encoded in a neutral blue. On hover, we show the exact value in addition to the percentage.
+
+#### Histogram
+
+The histogram links back to our color coding. Since the bins are double encoded with both the color as well as the gender index value, a legend for the color is not needed. The histogram illustrates how skewed the data is towards male domination of teams, while also giving an overview about the total distribution of the data. The text explains our "gender index" metric, as well as add some more basic facts about the distribution. We chose to keep it really light on the statistics, as not to overwhelm the user, and keep them focused on the main question.
+
+#### Map
+
+The map invites the user to *explore* the data. This statial representation facilitates searching and browsing: the user might know where the institution of interest is located, so they can quickly find them, much faster than e.g. a long alphabetical list. If they are interested in a specific institution, they may want to compare it to other institutions in that region: so the "interest" is space correlated. Lastly, a map is visually appealing and a welcome variety after displaying bar charts only, so far.
+
+To prevent overlapping of the circles, we do not scale the circles when zooming in. The farther the user zooms in, the less overlapping occurs.
+
+An overview-detail approach was chosen because while we do want to show the data about individual researchers, the researcher dataset is very large. We thus aggregated our data per institution and show this aggregated data on the map. Once the user clicks on an institution, they find out more detail specific to the top 10 most important researchers at the institution (measured by number of projects).
+In the "Top 10 researcher bar chart", the user can hover over the bars to see even more details about the person of interest. The "gender index" is displayed prominently for both the institution and the researchers in a consistent way: as a "badge" double encoded with the value of the index as well as the color.
+
+#### Top 30 Institutions
+
+We added a transition animation to show the linkage between this visualization and the previous map. The 30 most important institutions (again measured be the number of projects) from the map are rearranged in a sequential way, ordered by importance.
+This visualization was added to complement the map, to focus on the largest institutions and provide an alternative way of exploring the data. Here again, the user can interact and click on the institution to achieve the same results as with the map.
+
 
 ### <a name="algorithm"></a>Algorithm design
 The dataset was already small due to the data preprocessing that we needed to create the gender index. However, we also decided to display only institutions that have more than five projects (TODO stimmt das noch? ja) related to them. Thus, we could ensure a quick visualization with focus on those institutions that matter on a larger scale of this context.
@@ -85,4 +116,4 @@ The scrollytelling part of the visualization was appreciated by the user, as the
 Johannes P. and Laura L.
 
 ## <a name="copyright"></a> Data copyright
-Data derived from original data provided by https://gepris.dfg.de (c) Deutsche Forschungsgemeinschaft
+Data derived from original data provided by [GEPRIS](https://gepris.dfg.de) (c) Deutsche Forschungsgemeinschaft
