@@ -101,11 +101,11 @@ We validated the design with one person who is doing their PhD in sociology and 
 
 #### Addressing the wrong problem
 
-As the aim was clearly stated and context as well as criticism was given about the data, the user appreciated the scrollytelling part of the visualization. They did find our questions relevant / addressing an important question. However, they would have preferred a more critical discussion. First of all, gender is only one aspect of diversity, and the user did not see this fact reiterated to their satisfaction.
+Because it help to clearly state the aim and give context as well as criticism about the data, the user appreciated the scrollytelling part of the visualization. They did find our questions relevant / addressing an important problem. However, they would have preferred a more critical discussion. First, gender is only one aspect of diversity, and the user did not see this fact reiterated to their satisfaction. Second, using a gender binary for analysis reproduces the erasure of the actual breadth of gender categories.
 
 #### Bad data / operation abstraction
 
-The user had further questions about both GEPRIS as well as additional data: Does the GEPRIS data allow for titles beyond the gender binary (e.g. "Professor*in")? Is the mismatch between title and inferred gender due to the German "generische Maskulinum"? How well does the external data handle non-German names? The user picked one non-German researcher and looked them up online, realizing that the gender inference for their name was faulty. However, we then realized that the user confused the color coding for a gender inference instead of the coding for the gender index.
+The user had further questions about both GEPRIS as well as additional data: Does the GEPRIS data allow for titles beyond the gender binary (e.g. "Professor*in")? Is the mismatch between title and inferred gender due to the German "generische Maskulinum"? How well does the external data handle non-German names? The user picked one non-German researcher and looked them up online, realizing that the gender inference for their name was faulty. However, we then understood that the user confused the color coding for a gender inference instead of the coding for the gender index, which is a different challenge to fix.
 
 The questions could be addressed in the accompanying text. We could also add a link for each professor to the dataset in order to make it easier for the user to check the identity of each researcher and the correctness of the data. Additionally, we need to improve the color coding in the bar chart to make it more clear that the color coding is related to the gender index, not the researcher's inferred gender.
 
