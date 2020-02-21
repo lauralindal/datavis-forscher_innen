@@ -107,7 +107,7 @@ The scrollytelling part of the visualization was appreciated by the user, as the
 1. Clone this Repo
 2. run prototype.html via http
 
-*A hosted version is available [here](http://m16.feste-ip.net/datavis-forscher_innen/prototype.html)*
+*A hosted version is available [here](https://lauralindal.github.io/datavis-forscher_innen/prototype.html)*
 
 ## <a name="manual"></a> Manual
 [Video: screencast.mp4](screencast.mp4)
