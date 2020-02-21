@@ -324,10 +324,119 @@ $(document).ready(function() {
         // clear chart
         $('.chart').fadeOut(100, function() {
             d3.select('.chart').selectAll("*").remove();
-            d3.select('.chart')
-                .append('div')
-                .attr('class', 'project_gender_index');
-            $('.chart').fadeIn(100)
+
+            // load data for this chart
+            var genderHistData = d3.csv("data/project_gender_index.csv").then(function(data) {
+
+                //console.log(data);
+
+                // create barchart
+                var svg = d3.select('.chart')
+                    .append('svg')
+                    .attr('width', dim.width)
+                    .attr('height', 500);
+
+                // margins for the rectangles
+                var margin = {
+                        top: 20,
+                        right: 20,
+                        bottom: 50,
+                        left: 100
+                    },
+                    width = +svg.attr("width") - margin.left - margin.right,
+                    height = +svg.attr("height") - margin.top - margin.bottom,
+                    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                var x = d3.scaleLinear()
+                  .domain([0, 1])
+                  .range([0, width]);
+                g.append("g")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(d3.axisBottom(x));
+
+                var histogram = d3.histogram()
+                  .value(function(d) { return d.gender_index; })
+                  .domain(x.domain())
+                  .thresholds(10);
+
+
+                  var bins = histogram(data);
+
+                  console.log(bins)
+                  var y = d3.scaleLinear()
+                      .range([height, 0]);
+                      y.domain([0, d3.max(bins, function(d) { return d.length; })]); 
+                  g.append("g")
+                      .call(d3.axisLeft(y));
+
+
+                 // append the bar rectangles to the svg element
+                  g.selectAll("rect")
+                      .data(bins)
+                      .enter()
+                      .append("rect")
+                        .attr("x", 1) // 1
+                        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+                        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+                        .attr("height", function(d) { return height - y(d.length); })
+                        .style("fill", function(d){ return color(d3.mean(d,  function(d2) { 
+                            return Number(d2.gender_index); 
+                        })); })
+                    .style("cursor", "pointer")
+                    .append("svg:title") // hover effect
+                    .text(function(d) {
+                        return d.length;
+                    });
+
+
+                svg.append("text")
+                    .attr("class", "barchart-label")
+                    .attr("transform", "rotate(-90)")
+                    .attr("text-anchor", "end")
+                    .attr("y", 30)
+                    .attr("x", -150)
+                    //.attr("dy", -20)
+                    .text("Project Count");
+
+                svg.append("text")
+                    .attr("class", "barchart-label")
+                    .attr("text-anchor", "end")
+                    .attr("x", width - 200)
+                    .attr("y", height + margin.bottom + margin.top)
+                    .text("Gender Index");
+                  /*
+
+               
+
+                
+                    .attr("x", function(d) {
+                        return x(d.gender);
+                    })
+                    .attr("y", function(d) {
+                        return height;
+                    })
+                    .attr("width", function(d) {
+                        return x.bandwidth();
+                    }).style("cursor", "pointer")
+                    .append("svg:title") // hover effect
+                    .text(function(d) {
+                        return d.count;
+                    });
+
+                // transition animation
+                g.selectAll("rect")
+                    .transition()
+                    .transition().delay(function(d, i) { return i * 500; })
+                    .duration(500)
+                    .attr("height", function(d) {
+                        return height - y(d.count) //height-y(Number(d.count));
+                    })
+                    .attr("y", function(d) { return y(d.count); });
+
+                
+*/
+            $('.chart').fadeIn(100);
+        });
         });
     };
 
