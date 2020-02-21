@@ -12,7 +12,6 @@ $(document).ready(function() {
         .domain([1, 2922])
         .rangeRound([3, 10]) // instead of range, to avoid blurry
 
-    var chartPadding = 20;
 
     // for the hover tooltip
     var currentMousePos = { x: -1, y: -1 };
@@ -41,10 +40,31 @@ $(document).ready(function() {
         return d.geometry.coordinates[0];
     })
 
+
+
+
     // get the dynamic dims of chart for responsive rendering
-    var dim = d3.select('.chart').node().getBoundingClientRect();
-    var width = dim.width - 2 * chartPadding,
-        height = dim.height - 2 * chartPadding;
+    var dim = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+    };
+
+    var chartPadding = 20;
+    if(dim.width < 700) {
+        chartPadding = 10;
+    }
+
+
+    var chartWidth = Math.round(dim.width/2 - 2 * chartPadding),
+        chartHeight = Math.round(dim.height - 100 - 2 * chartPadding);
+
+    if(dim.width < 700) {
+        chartWidth = Math.round(dim.width - 2 * chartPadding);
+        chartHeight = Math.round(dim.height/2 - 2 * chartPadding);
+    }
+
+    console.log("chart width: " + chartWidth);
+    console.log("chart height: " + chartHeight);
 
     // first chart
     var showWelcome = function() {
@@ -60,8 +80,11 @@ $(document).ready(function() {
 
     // second chart
     var showOverallGenderData = function() {
+
         // clear chart
         $('.chart').fadeOut(100, function() {
+
+
             d3.select('.chart').selectAll("*").remove();
 
             // load data for this chart
@@ -70,8 +93,10 @@ $(document).ready(function() {
                 // create barchart
                 var svg = d3.select('.chart')
                     .append('svg')
-                    .attr('width', dim.width)
-                    .attr('height', 500);
+                    .attr('width', chartWidth)
+                    .attr('height', chartHeight);
+
+                console.log(chartWidth);
 
                 // margins for the rectangles
                 var margin = {
@@ -156,14 +181,14 @@ $(document).ready(function() {
                     .attr("transform", "rotate(-90)")
                     .attr("text-anchor", "end")
                     .attr("y", 30)
-                    .attr("x", -150)
+                    .attr("x", -Math.round(height/2))
                     //.attr("dy", -20)
                     .text("Researcher Count");
 
                 svg.append("text")
                     .attr("class", "barchart-label")
                     .attr("text-anchor", "end")
-                    .attr("x", width - 200)
+                    .attr("x", Math.round(width/2) + margin.right + margin.left)
                     .attr("y", height + margin.bottom + margin.top)
                     .text("Gender");
 
@@ -218,8 +243,8 @@ $(document).ready(function() {
                 // create barchart
                 var svg = d3.select('.chart')
                     .append('svg')
-                    .attr('width', dim.width)
-                    .attr('height', 500);
+                    .attr('width', chartWidth)
+                    .attr('height', chartHeight);
 
                 // margins for the rectangles
                 var margin = {
@@ -298,14 +323,14 @@ $(document).ready(function() {
                     .attr("class", "barchart-label")
                     .attr("transform", "rotate(-90)")
                     .attr("text-anchor", "end")
-                    .attr("y", 30)
-                    .attr("x", -150)
+                    .attr("y", margin.left - 40)
+                    .attr("x", -height/2)
                     .text("Percent");
 
                 svg.append("text")
                     .attr("class", "barchart-label")
                     .attr("text-anchor", "end")
-                    .attr("x", width - 200)
+                    .attr("x", Math.round(width/2) + margin.right + margin.left)
                     .attr("y", height + margin.bottom + margin.top)
                     .text("Professor Gender");
 
@@ -333,8 +358,8 @@ $(document).ready(function() {
                 // create barchart
                 var svg = d3.select('.chart')
                     .append('svg')
-                    .attr('width', dim.width)
-                    .attr('height', 500);
+                    .attr('width', chartWidth)
+                    .attr('height', chartHeight);
 
                 // margins for the rectangles
                 var margin = {
@@ -394,14 +419,14 @@ $(document).ready(function() {
                     .attr("transform", "rotate(-90)")
                     .attr("text-anchor", "end")
                     .attr("y", 30)
-                    .attr("x", -150)
+                    .attr("x", -Math.round(height/2))
                     //.attr("dy", -20)
                     .text("Project Count");
 
                 svg.append("text")
                     .attr("class", "barchart-label")
                     .attr("text-anchor", "end")
-                    .attr("x", width - 200)
+                     .attr("x", Math.round(width/2) + margin.right + margin.left)
                     .attr("y", height + margin.bottom + margin.top)
                     .text("Gender Index");
                   /*
@@ -447,7 +472,11 @@ $(document).ready(function() {
     var deutschland;
     var institute;
     var instituteNamen;
+    var map1;
     var showMap = function() {
+
+        map1 = true;
+        map2 = false;
 
         // clear chart
         $('.chart').fadeOut(100, function() {
@@ -457,18 +486,21 @@ $(document).ready(function() {
 
             map = d3.select('.chart')
                 .append('svg')
-                .attr('width', width)
-                .attr('height', height)
+                .attr('width', chartWidth)
+                .attr('height', chartHeight)
                 .attr('class', 'map')
                 .style('background-color', backgroundColor);
 
             deutschland = map.append('g');
 
+            var scale = 4000;
+            if(dim.width < 700)
+                scale = 2000;
             var projection = d3.geoAlbers()
-                .scale(4000)
+                .scale(scale)
                 .center([11.0, 50.8])
                 .rotate([0, 0])
-                .translate([width / 2, height / 2]);
+                .translate([chartWidth / 2, chartHeight / 2]);
 
             var geoPath = d3.geoPath()
                 .projection(projection)
@@ -518,7 +550,7 @@ $(document).ready(function() {
             map.call(d3.zoom()
                 .extent([
                     [0, 0],
-                    [dim.width, dim.height]
+                    [chartWidth, chartHeight]
                 ])
                 .scaleExtent([1, 50])
                 .on("zoom", zoomed));
@@ -541,6 +573,13 @@ $(document).ready(function() {
     };
 
     function clickMapCircle(institut) {
+
+        if(dim.width < 700){
+            if(map1)
+                $('.map-text1').hide()
+            if(map2)
+                $('.map-text2').hide()
+        }
 
         $('.info').fadeIn();
 
@@ -565,11 +604,18 @@ $(document).ready(function() {
         // sort by project count
         instituteResearchers.sort((a, b) => d3.descending(Number(a.project_count), Number(b.project_count))).reverse();
 
+        var leftMargin = 280;
+        var barChartWidth = chartWidth - 20;
+        if(dim.width <700){
+            leftMargin = 10;
+            barChartWidth = barChartWidth - 20;
+        }
+
         // create barchart
         var svg = info
             .style('background-color', backgroundColor)
             .append('svg')
-            .attr('width', dim.width)
+            .attr('width', barChartWidth)
             .attr('height', (instituteResearchers.length + 1) * 38);
 
         // margins for the rectangles
@@ -577,7 +623,7 @@ $(document).ready(function() {
                 top: 20,
                 right: 20,
                 bottom: 60,
-                left: 280
+                left: leftMargin
             },
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom,
@@ -616,6 +662,10 @@ $(document).ready(function() {
             ).attr("stroke-width", 0)
             .append("text")
 
+        var mouseEvent = 'mouseover';
+        if(dim.width <700)
+            mouseEvent = 'click';
+
         // create the bars
         g.selectAll(".bar")
             .data(instituteResearchers)
@@ -635,18 +685,22 @@ $(document).ready(function() {
             })
             .attr("height", y.bandwidth())
             .style("cursor", "pointer")
-            .on('mouseover', function(d) {
+            .on(mouseEvent, function(d) {
                 var gender = (d.gender == "F" ? "Female" : "Male");
+
+                var xpos = currentMousePos.x;
+                var ypos = currentMousePos.y;
+                if(dim.width < 700) {
+                    xpos = d3.event.clientX;
+                    ypos = d3.event.clientY;
+                }
 
                 $(".tooltip").show()
                     .html('<div><div class="institute-gi" style="background-color: ' + color(d.person_gender_index) + '">' + round2dezimals(d.person_gender_index) + '</div><div class="person-name">' + d.name + '</div></div><div style="claer:both"><b>Project Count:</b> ' + d.project_count + '<br><b>Gender:</b> ' + gender + '</di>')
-                    .css({ 'top': currentMousePos.y + 'px', 'left': currentMousePos.x + 'px' });
-
-
+                    .css({ 'top': ypos + 'px', 'left': xpos + 'px' });
             }).on('mouseout', function(d) {
-
-                $(".tooltip").hide()
-
+                if(dim.width >= 700)
+                    $(".tooltip").hide()
             });
 
         svg.append("text")
@@ -670,8 +724,12 @@ $(document).ready(function() {
 
     var showSorted = function() {
 
+        map1 = false;
+        map2 = true;
+
         $('.info').fadeOut();
         $('.schland').fadeOut();
+        $(".tooltip").hide()
         resetZoom();
 
         var institute = institute_data.features.filter(function(d) {
@@ -756,11 +814,17 @@ $(document).ready(function() {
 
     showWelcome();
 
-    scroll('overall_gender_data', '75%', showOverallGenderData, showWelcome);
-    scroll('prof_gender_data', '75%', showProfGenderValidation, showOverallGenderData);
-    scroll('project_gender_index', '75%', showProjectGenderIndex, showProfGenderValidation);
-    scroll('map', '75%', showMap, showProjectGenderIndex);
-    scroll('sort_values', '75%', showSorted, showMap);
+    
+    var offset = '75%';
+    if(dim.width < 700) {
+        offset = '100%';
+    }
+
+    scroll('overall_gender_data', offset, showOverallGenderData, showWelcome);
+    scroll('prof_gender_data', offset, showProfGenderValidation, showOverallGenderData);
+    scroll('project_gender_index', offset, showProjectGenderIndex, showProfGenderValidation);
+    scroll('map', offset, showMap, showProjectGenderIndex);
+    scroll('sort_values', offset, showSorted, showMap);
 
     $(document).mousemove(function(event) {
         currentMousePos.x = event.pageX;

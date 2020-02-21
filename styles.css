@@ -11,11 +11,16 @@ body {
 
 .fixed-header {
   width: 50vw;
-  padding: 20px;
+  padding-left: 20px;
   margin: 0px auto;
   position: fixed;
   font-style: bold;
   font-size: 20px;
+}
+
+.fixed-header h1{
+  font-size: 30px;
+  line-height: 1;
 }
 
 .map {
@@ -23,11 +28,6 @@ body {
 }
 
 .institute-circle {
-  /*opacity: 0.5;*/
-}
-
-.institute-circle:hover {
-  opacity: 1;
   cursor: pointer;
 }
 
@@ -58,7 +58,7 @@ body {
   height: 80vh;
   width: 45vw;
   padding: 20px;
-  margin-top: 140px;
+  margin-top: 100px;
 }
 
 .text {
@@ -67,6 +67,12 @@ body {
   width: 50vw;
   padding: 20px;
 }
+
+.text-bg {
+  background-color: #fff;
+}
+
+
 
 .info {
   box-shadow: 0px 0px 5px #ccc;
@@ -140,9 +146,8 @@ body {
 }
 
 .scroll-info-text {
-  font-size: 25px;
-
-  height: 100vh;
+  font-size: 20px;
+  height: 120vh;
 }
 
 .tick {
@@ -176,4 +181,49 @@ blockquote {
 .barchart-label {
 	font-size: 14px;
 	fill: #999;
+}
+
+@media all and (min-width: 1300px) {
+
+  .scroll-info-text {
+    height: 120vh;
+    font-size: 24px;
+  }
+}
+
+@media all and (max-width: 700px) {
+
+  .welcome-pic {
+    margin-top: 100px;
+  }
+
+  .fixed-header {
+    width: 100vw;
+    position: static;
+  }
+  .chart {
+    width: 100%;
+    z-index: 3;
+    margin-top: 0px;
+    height: 40vh;
+    top:0;
+    padding: 10px 0;
+  }
+
+  .text {
+    width: 100%;
+    margin-top: 300px;
+    padding: 0;
+  }
+  .text-bg {
+    width: 100%;
+    padding:20px;
+    z-index: 4;
+    position: relative;
+  }
+
+  .scroll-info-text {
+    height: 200vh;
+    font-size: 18px;
+  }
 }

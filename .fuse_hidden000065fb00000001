@@ -3,7 +3,6 @@
 <head>
   <title>Gendered collaboration in German research</title>
   <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
@@ -31,11 +30,11 @@
     <h1>Gendered collaboration in German research</h1>
   </div>
 
-
+  <div class="chart">
+  </div>
 
   <div class="text">
     <div id="preinfo" class="pre-info scroll-info-text">
-      <div class="text-bg">
         <p>
           <blockquote>"There is now abundant data that diversity is essential to scientific excellence, with experiments showing that diverse teams have cognitive diversity that allows them to outperform homogeneous teams." <a
               href="https://fas.columbia.edu/files/fas/content/Columbia-ArtsandSciences-PPC-Equity-Reports-2018.pdf">(Columbia University 2018)</a></blockquote>
@@ -44,67 +43,45 @@
           shaped by networks of white men, such as academia.</p>
         <p><strong>How diverse are German research projects regarding the gender ratio of their teams?</strong></p>
         <p><strong>How gender diverse are individual researchers' collaborations?</strong></p>
-      </div>
     </div>
 
     <div id="overall_gender_data" class="scroll-info-text">
-      <div class="text-bg">
-
       <p>Let's find out from data by one of the largest German institutions to fund research projects: <a href="https://gepris.dfg.de/gepris/OCTOPUS?language=en">Deutsche Forschungsgemeinschaft</a>.</p>
       <p>They do not provide information on the gender of their research, so with <a href="https://ideas.repec.org/c/wip/eccode/10.html">a little help</a>, we had to infer a gender based on the researcher's first name.</p>
       <p><strong>This is the gender distribution of all researchers funded by the DFG.</strong></p>
     </div>
-</div>
-    <div id="prof_gender_data" class="scroll-info-text">
-                  <div class="text-bg">
 
+    <div id="prof_gender_data" class="scroll-info-text">
       <p>To stay critical of this data and validate our inference, we used a subset of the data that contains only professors.</p>
       <p>Since the title "Professor" / "Professorin" has a gendered connotation in German, we could compare the gendered title to our inferred gender.</p>
       <p class="note">Please also note that we were unable to infer outside of the gender binary due to the lack of such a dataset.</p>
       <p>Mistakes are represented in yellow, red and blue and contain three error classes: a mismatch between title and inferred gender, a gender could not be assigned or the first name was not recognized.</p>
       <p><strong>This is the ratio of correct gender inference for the subset of professors.</strong></p>
     </div>
-    </div>
 
     <div id="project_gender_index" class="scroll-info-text">
-            <div class="text-bg">
-
       <p>Looking at each funded project with more than one person, we can now calculate the gender ratio per project.</p>
       <p>Thus, the project gender index indicates the gender ratio in a project, where 0 means there are only men and 1 means there are only women.</p>
       <p>In detail, 10488 (67%) collaborative projects funded by the DFG involve only men, whereas 667 (4%) involve only women.</p>
       <p><strong>This histogram shows the distribution of the project gender index.</strong></p>
     </div>
-    </div>
 
     <div id="map" class="scroll-info-text">
-      
-      <div class="text-bg">
-        <div class ="map-text1">
-          <p>You can now look at individual institutions and their gender index, based on the researchers associated with them.</p>
-          <p>The dot size is based on the amount of projects an institution's researchers are involved in.</p>
-          <p><strong>This map shows the institutions and their top 10 researchers individually.</strong></p>
-        </div>
+      <p>You can now look at individual insitutions and their gender index, based on the researchers associated with them.</p>
+      <p>The dot size is based on the amount of projects an institution's researchers are involved in.</p>
+      <p><strong>This map shows the institutions and their top 10 researchers individually.</strong></p>
       <div class="info">
     </div>
     <div class="tooltip"></div>
-</div>
+
     </div>
 
     <div id="sort_values" class="scroll-info-text">
-      <div class="text-bg">
-        <div class ="map-text2">
-
-          <p>So, how and where can we start addressing the fact that research collaborations are clearly skewed towards men-only groups? Let's start in places with the most impact.</p>
-          <p><strong>Based on the amount of projects that an institution's researchers are involved in, these are the top 30 institutions.</strong></p>
-        </div>
+      <p>Based on the amount of projects that an institution's researchers are involved in, these are the top 30 institutions.</p>
       <div class="info info2">
       </div>
       <div class="tooltip"></div>
     </div>
-  </div>
-  </div>
-
-  <div class="chart">
   </div>
 
   <script src='viz.js'></script>
